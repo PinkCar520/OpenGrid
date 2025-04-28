@@ -1,0 +1,22 @@
+{
+  "name": "zero-sphere-web",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "bootstrap": "pnpm install && pnpm --filter ieas-main install && pnpm --filter ieas-ins install",
+    "clean": "rimraf node_modules **/*/node_modules",
+    "dev": "pnpm -r --parallel dev",
+    "dev:main": "pnpm --filter ieas-main dev",
+    "dev:ins": "pnpm --filter ieas-ins dev",
+    "build": "pnpm -r --parallel build",
+    "build:main": "pnpm --filter ieas-main build",
+    "build:ins": "pnpm --filter ieas-ins build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.2",
+    "rimraf": "^5.0.0"
+  }
+}
