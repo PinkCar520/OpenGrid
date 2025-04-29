@@ -1,61 +1,85 @@
-# vehicle-main
+# Vehicle-Main 新能源汽车监控平台主应用
 
-This template should help get you started developing with Vue 3 in Vite.
+基于 Vue 3 + TypeScript + Element Plus 开发的新能源汽车监控平台主应用，负责微应用的管理和集成。
 
-## Recommended IDE Setup
+## 功能特性
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- 微应用管理
+  - 动态加载微应用
+  - 应用间通信
+  - 路由分发
 
-## Type Support for `.vue` Imports in TS
+- 系统管理
+  - 用户管理
+  - 角色管理
+  - 权限管理
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 项目结构
+```
+src/
+├── assets/          # 静态资源
+├── components/      # 公共组件
+├── config/          # 配置文件
+│   └── loadedMicroAppLifeCycle.ts  # 微应用生命周期
+├── router/          # 路由配置
+├── stores/          # 状态管理
+├── styles/          # 样式文件
+└── views/           # 页面视图
+    ├── Dashboard/   # 仪表盘
+    └── system/      # 系统管理
+```
 
-## Customize configuration
+## 微前端管理
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- 基于 qiankun 框架
+- 支持的微应用：
+  - BEV：纯电动汽车
+  - FCE：燃料电池汽车
+  - HEV：混合动力汽车
+  - HPV：插电式混动汽车
 
-## Project Setup
+## 开发环境
 
+- Node.js >= 18
+- pnpm >= 8
+- Vue 3.5+
+- TypeScript 5.8+
+- Vite 6.2+
+
+## 开发工具
+
+- 推荐使用 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- 需要禁用 Vetur 插件
+
+## 项目命令
+
+### 开发调试
 ```sh
+# 安装依赖
 pnpm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# 启动开发服务器
 pnpm dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# 构建生产版本
 pnpm build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
+### 测试和代码检查
 ```sh
+# 单元测试
 pnpm test:unit
-```
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
+# E2E测试
 pnpm test:e2e:dev
-```
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-pnpm build
-pnpm test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# 代码检查
 pnpm lint
 ```
+
+## 相关文档
+
+- [Vue 3 文档](https://cn.vuejs.org/)
+- [Element Plus](https://element-plus.org/zh-CN/)
+- [qiankun 微前端](https://qiankun.umijs.org/zh)
+- [Vite 配置](https://cn.vitejs.dev/)

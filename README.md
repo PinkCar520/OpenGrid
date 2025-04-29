@@ -1,31 +1,38 @@
 # ZeroSphere Web - 微前端应用
 
 ## 项目简介
-ZeroSphere Web 是一个基于微前端架构的现代化 Web 应用。该项目采用模块化设计，支持多个独立应用的协同运行。
+ZeroSphere Web 是一个基于微前端架构的新能源汽车监控系统。该项目采用模块化设计，支持多个独立应用的协同运行。
 
 ## 技术栈
 - 微前端框架：qiankun
 - 主应用框架：Vue 3
+- UI 框架：Element Plus
 - 构建工具：Vite
 - 包管理工具：pnpm
+- 开发语言：TypeScript
 
 ## 项目结构
 ```
 ZeroSphere-web/
-├── packages/           # 子应用目录
-│   ├── vehicle-main/          # 主应用
-│   └── ... 
-├── shared/            # 共享资源
+├── packages/              # 子应用目录
+│   ├── vehicle-main/     # 主应用 - 车辆监控中心
+│   ├── bev-micro/       # 纯电动汽车监控
+│   ├── fce-micro/       # 燃料电池汽车监控
+│   ├── hev-micro/       # 混合动力汽车监控
+│   └── hpv-micro/       # 插电式混动汽车监控
+├── shared/               # 共享资源
 ├── package.json
-├── pnpm-workspace.yaml # pnpm workspace 配置文件
-├── pnpm-lock.yaml     # pnpm 依赖锁定文件
+├── pnpm-workspace.yaml   # pnpm workspace 配置文件
+└── pnpm-lock.yaml       # pnpm 依赖锁定文件
 ```
 
 ## 快速开始
 
 ### 环境要求
-- Node.js >= 16
-- pnpm >= 7
+- Node.js >= 18
+- pnpm >= 8
+- Vue >= 3.5
+- TypeScript >= 5.8
 
 ### 初始化项目
 ```bash
@@ -41,11 +48,14 @@ pnpm clean
 # 启动所有应用
 pnpm dev
 
-# 只启动主应用
+# 启动主应用
 pnpm dev:main
 
-# 只启动保险微应用
-pnpm dev:ins
+# 启动具体微应用
+pnpm dev:bev  # 纯电动汽车微应用
+pnpm dev:fce  # 燃料电池汽车微应用
+pnpm dev:hev  # 混合动力汽车微应用
+pnpm dev:hpv  # 插电式混动微应用
 ```
 
 ### 构建项目
@@ -53,11 +63,14 @@ pnpm dev:ins
 # 构建所有应用
 pnpm build
 
-# 只构建主应用
+# 构建主应用
 pnpm build:main
 
-# 只构建保险微应用
-pnpm build:ins
+# 构建具体微应用
+pnpm build:bev
+pnpm build:fce
+pnpm build:hev
+pnpm build:hpv
 ```
 
 ### 常用开发命令
@@ -65,15 +78,20 @@ pnpm build:ins
 |------|------|
 | pnpm bootstrap | 初始化项目，安装依赖并构建 |
 | pnpm dev | 启动所有应用（开发模式） |
-| pnpm dev:main | 只启动主应用 |
-| pnpm dev:ins | 只启动保险微应用 |
+| pnpm dev:main | 启动主应用 |
+| pnpm dev:{app} | 启动指定微应用 |
 | pnpm build | 构建所有应用 |
+| pnpm build:{app} | 构建指定微应用 |
 | pnpm clean | 清理所有 node_modules |
+| pnpm lint | 运行代码检查 |
+| pnpm format | 格式化代码 |
 
 ## 开发指南
-1. 主应用配置位于 `packages/main`
-2. 新增子应用请遵循项目规范创建
-3. 共享资源统一放置在 `shared` 目录
+1. 主应用配置位于 `packages/vehicle-main`
+2. 各微应用独立开发，通过 qiankun 框架集成
+3. 遵循 TypeScript 类型规范
+4. 使用 Element Plus 组件库
+5. 保持代码风格一致，使用 ESLint 和 Prettier
 
 ## 贡献指南
 1. Fork 本仓库

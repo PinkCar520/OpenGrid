@@ -1,61 +1,97 @@
-# fce-micro
+# FCE-Micro 燃料电池汽车微应用
 
-This template should help get you started developing with Vue 3 in Vite.
+燃料电池汽车监控系统的微前端应用，基于 Vue 3 + TypeScript + Vite + Element Plus 开发。
 
-## Recommended IDE Setup
+## 功能特性
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- 加氢站地图
+  - 加氢站位置查找
+  - 实时状态显示
+  - 导航功能
 
-## Type Support for `.vue` Imports in TS
+- 燃料电池仪表盘
+  - 氢气储量监控
+  - 电堆状态监测
+  - 系统温度监控
+  - 性能趋势分析
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 开发环境
 
-## Customize configuration
+- Node.js >= 18
+- pnpm >= 8
+- Vue 3.5+
+- TypeScript 5.8+
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 项目结构
+```
+src/
+├── assets/          # 静态资源
+├── components/      # 公共组件
+├── router/         # 路由配置
+├── stores/         # 状态管理
+├── styles/         # 样式文件
+└── views/          # 页面视图
+    ├── home/              # 首页
+    ├── hydrogenMap/       # 加氢站地图
+    └── fuelCellDashboard/ # 燃料电池仪表盘
+```
 
-## Project Setup
+## 微前端配置
+- 使用 qiankun 作为微前端框架
+- 应用入口配置在 vite.config.ts 中
+- 生命周期配置在 src/main.ts 中
+- 路由配置支持主应用下发
 
+## 开发规范
+1. 组件开发
+   - 使用 Vue 3 组合式 API
+   - 保持单文件组件结构清晰
+   - 提取公共逻辑到 composables
+
+2. 样式开发
+   - 使用 SCSS 预处理器
+   - 遵循 BEM 命名规范
+   - 使用 Element Plus 变量系统
+
+3. 类型规范
+   - 所有组件props使用 TypeScript 类型定义
+   - API 请求和响应需定义接口类型
+   - 避免使用 any 类型
+
+## 开发工具
+
+- 推荐使用 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- 需要禁用 Vetur 插件以避免冲突
+
+## 项目命令
+
+### 开发调试
 ```sh
+# 安装依赖
 pnpm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# 启动开发服务器
 pnpm dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# 构建生产版本
 pnpm build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
+### 测试
 ```sh
+# 单元测试
 pnpm test:unit
-```
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
+# E2E测试
 pnpm test:e2e:dev
-```
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-pnpm build
-pnpm test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# 代码检查
 pnpm lint
 ```
+
+## 相关文档
+
+- [Vue 3 文档](https://cn.vuejs.org/)
+- [Element Plus 组件库](https://element-plus.org/zh-CN/)
+- [Vite 配置指南](https://vite.dev/config/)
+- [Vitest 测试框架](https://vitest.dev/)
