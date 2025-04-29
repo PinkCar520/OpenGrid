@@ -35,6 +35,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '~/': `${path.resolve(__dirname, 'src')}/`,
       '#': '/src/components',
+      'element-plus': path.resolve(__dirname,'node_modules/element-plus'),
     },
   },
   css: {

@@ -40,7 +40,7 @@ class Render {
       this.instance.component(key, component)
     }
 
-    this.instance.mount(container ? container.querySelector('#app') : '#app');
+    this.instance.mount(container ? container.querySelector('#bev') : '#bev');
   }
 
   async mount(props: any) {

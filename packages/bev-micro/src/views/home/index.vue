@@ -1,11 +1,70 @@
 <template>
   <div class="bev-home">
     <h1>纯电动汽车_Micro_App</h1>
-    <el-button type="primary" @click="$router.push('/bev/superchargerMap')">充电功能</el-button>
-    <el-button type="primary" @click="$router.push('/bev/batteryHealthDashboard')">电池健康仪表盘</el-button>
+    <div class="dashboard-cards">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-card @click="$router.push('/bev/superchargerMap')">
+            <div class="card-content">
+              <el-icon size="48" color="var(--bev-color-primary)"><Location /></el-icon>
+              <h3>充电站地图</h3>
+              <p>查找附近充电站和实时充电状态</p>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card @click="$router.push('/bev/batteryHealthDashboard')">
+            <div class="card-content">
+              <el-icon size="48" color="var(--bev-color-primary)"><DataLine /></el-icon>
+              <h3>电池健康仪表盘</h3>
+              <p>监控电池健康状态和性能指标</p>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
   </div>
-  </template>
-  <script lang="ts" setup>
+</template>
+
+<script lang="ts" setup>
 import { ref } from 'vue'
+import { Location, DataLine } from '@element-plus/icons-vue'
 const input = ref('')
-  </script>
+</script>
+
+<style lang="scss" scoped>
+.bev-home {
+  padding: 20px;
+
+  h1 {
+    color: var(--bev-color-primary);
+    margin-bottom: 30px;
+  }
+
+  .dashboard-cards {
+    .el-card {
+      cursor: pointer;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+
+    .card-content {
+      text-align: center;
+      padding: 20px;
+
+      h3 {
+        margin: 15px 0;
+        color: var(--bev-color-primary);
+      }
+
+      p {
+        color: #666;
+        font-size: 14px;
+      }
+    }
+  }
+}
+</style>

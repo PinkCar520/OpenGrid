@@ -129,12 +129,30 @@ importers:
 
   packages/fce-micro:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.13(typescript@5.8.3))
+      element-plus:
+        specifier: ^2.9.9
+        version: 2.9.9(vue@3.5.13(typescript@5.8.3))
       pinia:
         specifier: ^3.0.1
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
+      qiankun:
+        specifier: ^2.10.16
+        version: 2.10.16
+      sass:
+        specifier: ^1.87.0
+        version: 1.87.0
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0))
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
+      vue-i18n:
+        specifier: ^10.0.7
+        version: 10.0.7(vue@3.5.13(typescript@5.8.3))
       vue-router:
         specifier: ^4.5.0
         version: 4.5.1(vue@3.5.13(typescript@5.8.3))
@@ -202,6 +220,12 @@ importers:
       typescript:
         specifier: ~5.8.0
         version: 5.8.3
+      unplugin-auto-import:
+        specifier: ^19.1.2
+        version: 19.1.2(@nuxt/kit@3.16.2)(@vueuse/core@13.1.0(vue@3.5.13(typescript@5.8.3)))
+      unplugin-vue-components:
+        specifier: ^28.5.0
+        version: 28.5.0(@babel/parser@7.27.0)(@nuxt/kit@3.16.2)(vue@3.5.13(typescript@5.8.3))
       vite:
         specifier: ^6.2.4
         version: 6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0)
@@ -217,12 +241,30 @@ importers:
 
   packages/hev-micro:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.13(typescript@5.8.3))
+      element-plus:
+        specifier: ^2.9.9
+        version: 2.9.9(vue@3.5.13(typescript@5.8.3))
       pinia:
         specifier: ^3.0.1
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
+      qiankun:
+        specifier: ^2.10.16
+        version: 2.10.16
+      sass:
+        specifier: ^1.87.0
+        version: 1.87.0
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0))
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
+      vue-i18n:
+        specifier: ^10.0.7
+        version: 10.0.7(vue@3.5.13(typescript@5.8.3))
       vue-router:
         specifier: ^4.5.0
         version: 4.5.1(vue@3.5.13(typescript@5.8.3))
@@ -290,6 +332,12 @@ importers:
       typescript:
         specifier: ~5.8.0
         version: 5.8.3
+      unplugin-auto-import:
+        specifier: ^19.1.2
+        version: 19.1.2(@nuxt/kit@3.16.2)(@vueuse/core@13.1.0(vue@3.5.13(typescript@5.8.3)))
+      unplugin-vue-components:
+        specifier: ^28.5.0
+        version: 28.5.0(@babel/parser@7.27.0)(@nuxt/kit@3.16.2)(vue@3.5.13(typescript@5.8.3))
       vite:
         specifier: ^6.2.4
         version: 6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0)
@@ -305,12 +353,30 @@ importers:
 
   packages/hpv-micro:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.13(typescript@5.8.3))
+      element-plus:
+        specifier: ^2.9.9
+        version: 2.9.9(vue@3.5.13(typescript@5.8.3))
       pinia:
         specifier: ^3.0.1
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
+      qiankun:
+        specifier: ^2.10.16
+        version: 2.10.16
+      sass:
+        specifier: ^1.87.0
+        version: 1.87.0
+      vite-plugin-qiankun:
+        specifier: ^1.0.15
+        version: 1.0.15(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0))
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
+      vue-i18n:
+        specifier: ^10.0.7
+        version: 10.0.7(vue@3.5.13(typescript@5.8.3))
       vue-router:
         specifier: ^4.5.0
         version: 4.5.1(vue@3.5.13(typescript@5.8.3))
@@ -378,6 +444,12 @@ importers:
       typescript:
         specifier: ~5.8.0
         version: 5.8.3
+      unplugin-auto-import:
+        specifier: ^19.1.2
+        version: 19.1.2(@nuxt/kit@3.16.2)(@vueuse/core@13.1.0(vue@3.5.13(typescript@5.8.3)))
+      unplugin-vue-components:
+        specifier: ^28.5.0
+        version: 28.5.0(@babel/parser@7.27.0)(@nuxt/kit@3.16.2)(vue@3.5.13(typescript@5.8.3))
       vite:
         specifier: ^6.2.4
         version: 6.3.3(@types/node@22.15.2)(jiti@2.4.2)(sass@1.87.0)

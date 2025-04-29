@@ -78,15 +78,35 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/insVue/:pathMatch(.*)*",
-    name: "insVue",
+    path: "/fce/:pathMatch(.*)*",
+    name: "fceMicro",
     component: Layout,
     children: [],
     meta: {
-      title: 'insVue',
+      title: 'fceMicro',
       keepAlive: true,
     },
   },
+  {
+    path: "/hev/:pathMatch(.*)*",
+    name: "hevMicro", 
+    component: Layout,
+    children: [],
+    meta: {
+      title: 'hevMicro',
+      keepAlive: true,
+    },
+  },
+  {
+    path: "/hpv/:pathMatch(.*)*",
+    name: "hpvMicro", 
+    component: Layout,
+    children: [],
+    meta: {
+      title: 'hpvMicro',
+      keepAlive: true,
+    },
+  }
 ];
 
 const router = createRouter({

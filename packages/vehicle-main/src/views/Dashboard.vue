@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="em-dashboard">
     <h1>Dashboard</h1>
     <el-input v-model="input" placeholder="请输入内容"></el-input>
   </div>
@@ -18,3 +18,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.em-dashboard {
+  h1 {
+    color: var(--em-color-primary);
+  }
+}
+</style>

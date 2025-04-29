@@ -1,14 +1,26 @@
-import './assets/main.css'
+import './styles/index.scss'
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import render from './hooks/index';
+import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper';
 
-import App from './App.vue'
-import router from './router'
+renderWithQiankun({
+  bootstrap() {
+    console.log('bootstraped__microApp');
+  },
+  mount(props) {
+    render.mount(props);
+    console.log('mount__microApp', props);
+  },
+  unmount(props) {
+    render.unmount(props);
+    console.log('unmount__microApp', props);
+  },
+  update(props) {
+    render.update(props);
+    console.log('update props', props);
+  },
+});
 
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
+  render.mount({});
+}

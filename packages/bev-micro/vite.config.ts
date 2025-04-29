@@ -38,10 +38,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      // '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@': '/src',
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
       '~/': `${path.resolve(__dirname, 'src')}/`,
       '#': '/src/components',
+      'element-plus': path.resolve(__dirname,'node_modules/element-plus'),
     },
   },
   css: {
@@ -50,9 +50,13 @@ export default defineConfig({
         additionalData: `@use "~/styles/element/index.scss" as *;`,
       },
     },
+    modules: {
+      localsConvention: 'camelCase', // CSS 类名转为驼峰
+      generateScopedName: '[name]__[local]___[hash:base64:5]', // 生成唯一类名
+    }
   },
   server: {
-    port: 5174,
+    port: 5110,
     open: true,
     headers: {
       'Access-Control-Allow-Origin': '*',

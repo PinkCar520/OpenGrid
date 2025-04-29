@@ -17,60 +17,60 @@ const { t } = useI18n()
 const tabsStore = useTabsStore();
 const menuData = ref([
   {
-    id: '123',
+    id: 'aG9tZQ==', // base64 for 'home'
     parentId: null,
     children: [],
     data: {
-      id: '123',
+      id: 'aG9tZQ==',
       label: '首页',
       icon: 'House',
-      title: 'myTask',
+      title: 'dashboard',
       value: '/dashboard',
     }
   },
   {
-    id: '1234',
+    id: 'c3lzdGVt', // base64 for 'system'
     parentId: null,
     data: {
-      id: '1234',
+      id: 'c3lzdGVt',
       label: '系统管理',
       icon: 'Setting',
-      title: 'myTask',
+      title: 'system',
       value: '/system',
     },
     children: [
       {
-        id: '1234A',
-        parentId: '123456',
+        id: 'c3lzdGVtLXVzZXJz', // base64 for 'system-users'
+        parentId: 'c3lzdGVt',
         data: {
-          id: '1234A',
+          id: 'c3lzdGVtLXVzZXJz',
           label: '用户管理',
           icon: 'User',
-          title: 'myTask',
+          title: 'users',
           value: '/system/users',
         },
         children: [],
       },
       {
-        id: '1234B',
-        parentId: '1234',
+        id: 'c3lzdGVtLXJvbGVz', // base64 for 'system-roles'
+        parentId: 'c3lzdGVt',
         data: {
-          id: '1234B',
+          id: 'c3lzdGVtLXJvbGVz',
           label: '角色管理',
           icon: 'List',
-          title: 'myTask',
+          title: 'roles',
           value: '/system/roles',
         },
         children: [],
       },
       {
-        id: '1234C',
-        parentId: '1234',
+        id: 'c3lzdGVtLXBlcm1pc3Npb25z', // base64 for 'system-permissions'
+        parentId: 'c3lzdGVt',
         data: {
-          id: '1234C',
+          id: 'c3lzdGVtLXBlcm1pc3Npb25z',
           label: '权限管理',
           icon: 'Document',
-          title: 'myTask',
+          title: 'permissions',
           value: '/system/permissions'
         },
         children: [],
@@ -78,10 +78,10 @@ const menuData = ref([
     ]
   },
   {
-    id: '12345',
+    id: 'bmV3RW5lcmd5', // base64 for 'newEnergy'
     parentId: null,
     data: {
-      id: '12345',
+      id: 'bmV3RW5lcmd5',
       label: '新能源汽车',
       icon: 'List',
       title: 'myTask',
@@ -89,14 +89,50 @@ const menuData = ref([
     },
     children: [
       {
-        id: '123456A',
-        parentId: '12345',
+        id: 'YmV2LWhvbWU=', // base64 for 'bev-home'
+        parentId: 'bmV3RW5lcmd5',
         data: {
-          id: '123456A',
+          id: 'YmV2LWhvbWU=',
           label: '纯电动汽车应用',
           icon: 'List',
           title: 'bevHome',
           value: '/bev/bevHome',
+        },
+        children: [],
+      },
+      {
+        id: 'ZmNlLWhvbWU=', // base64 for 'fce-home'
+        parentId: 'bmV3RW5lcmd5',
+        data: {
+          id: 'ZmNlLWhvbWU=',
+          label: '燃料电池汽车应用',
+          icon: 'List',
+          title: 'fceHome',
+          value: '/fce/fceHome',
+        },
+        children: [],
+      },
+      {
+        id: 'aGV2LWhvbWU=', // base64 for 'hev-home'
+        parentId: 'bmV3RW5lcmd5',
+        data: {
+          id: 'aGV2LWhvbWU=',
+          label: '混合动力汽车应用',
+          icon: 'List',
+          title: 'hevHome',
+          value: '/hev/hevHome',
+        },
+        children: [],
+      },
+      {
+        id: 'aHB2LWhvbWU=', // base64 for 'hpv-home'
+        parentId: 'bmV3RW5lcmd5',
+        data: {
+          id: 'aHB2LWhvbWU=',
+          label: '插电式混动汽车应用',
+          icon: 'List',
+          title: 'hpvHome',
+          value: '/hpv/hpvHome',
         },
         children: [],
       },

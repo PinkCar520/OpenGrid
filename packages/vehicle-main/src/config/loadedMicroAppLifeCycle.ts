@@ -12,9 +12,9 @@ interface MicroAppConfig {
 }
 
 export function metaTitle(to: any): void {
-  const pathMatch = to.params.pathMatch;
-  const length = pathMatch.length - 1;
-  to.meta.title = pathMatch.length > 1 ? pathMatch[length] : pathMatch;
+  // const pathMatch = to.params.pathMatch;
+  // const length = pathMatch.length - 1;
+  // to.meta.title = pathMatch.length > 1 ? pathMatch[length] : pathMatch;
 }
 
 export function isMicroApp(targetPath) {

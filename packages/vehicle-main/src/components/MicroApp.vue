@@ -1,5 +1,8 @@
 <template>
     <div id="micro-bev-container"></div>
+    <div id="micro-fce-container"></div>
+    <div id="micro-hev-container"></div>
+    <div id="micro-hpv-container"></div>
 </template>
 <script lang="ts" setup>
 import { 
