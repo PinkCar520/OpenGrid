@@ -1,0 +1,48 @@
+// F1 品牌色值
+$f1-colors: (
+  'primary': #e10600,    // F1 Red
+  'secondary': #1e1e1e,  // Racing Black
+  'accent': #15151e,     // Night Race
+  'grid': #f8f4f4,      // Grid Light
+  'track': #737373,      // Track Grey
+  'safety': #ffcc00,     // Safety Yellow
+  'victory': #2ec402,    // Victory Green
+  'pit': #0090ff        // Pit Blue
+);
+
+// 主题变量
+:root {
+  @each $name, $color in $f1-colors {
+    --f1-color-#{$name}: #{$color};
+  }
+
+  // 字体
+  --f1-font-title: 'Formula1-Regular', sans-serif;
+  --f1-font-body: 'Titillium Web', sans-serif;
+
+  // 圆角
+  --f1-border-radius: 4px;
+
+  // 阴影
+  --f1-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+// 暗色主题
+.dark-theme {
+  --f1-color-grid: #2a2a2a;
+  --f1-color-track: #4a4a4a;
+  background-color: var(--f1-color-accent);
+  color: #ffffff;
+}
+
+// 全局样式
+body {
+  font-family: var(--f1-font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--f1-font-title);
+  letter-spacing: -0.02em;
+}

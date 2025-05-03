@@ -16,8 +16,8 @@ ZeroSphere Web 是一个基于微前端架构的新能源汽车监控系统。�
 ZeroSphere-web/
 ├── packages/              # 子应用目录
 │   ├── vehicle-main/     # 主应用 - 车辆监控中心
-│   ├── bev-micro/       # 纯电动汽车监控
-│   ├── fce-micro/       # 燃料电池汽车监控
+│   ├── race-micro/       # 纯电动汽车监控
+│   ├── team-micro/       # 燃料电池汽车监控
 │   ├── hev-micro/       # 混合动力汽车监控
 │   └── hpv-micro/       # 插电式混动汽车监控
 ├── shared/               # 共享资源
@@ -52,8 +52,8 @@ pnpm dev
 pnpm dev:main
 
 # 启动具体微应用
-pnpm dev:bev  # 纯电动汽车微应用
-pnpm dev:fce  # 燃料电池汽车微应用
+pnpm dev:race  # 纯电动汽车微应用
+pnpm dev:team  # 燃料电池汽车微应用
 pnpm dev:hev  # 混合动力汽车微应用
 pnpm dev:hpv  # 插电式混动微应用
 ```
@@ -67,8 +67,8 @@ pnpm build
 pnpm build:main
 
 # 构建具体微应用
-pnpm build:bev
-pnpm build:fce
+pnpm build:race
+pnpm build:team
 pnpm build:hev
 pnpm build:hpv
 ```
