@@ -302,7 +302,7 @@ const formatPositionChange = (change: number) => {
 .standings {
   padding: 40px;
   background: #fafafa;
-  min-height: 100vh;
+  // min-height: 100vh;
 
   .section-header {
     display: flex;

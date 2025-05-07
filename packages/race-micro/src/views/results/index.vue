@@ -1,5 +1,6 @@
 <template>
   <div class="race-results">
+    <el-button @click="goJ()" type="primary">查看积分排名</el-button>
     <el-card class="results-card">
       <template #header>
         <div class="header-content">
@@ -106,9 +107,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from "vue-router"
 import { Search, Timer } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
 
+const router = useRouter()
 const selectedRace = ref('')
 const selectedSession = ref('R')
 const chartRef = ref()
@@ -207,13 +210,16 @@ const initCharts = () => {
     ]
   })
 }
+const goJ = () => {
+  window.parentRouter.push('/race/standings')
+}
 </script>
 
 <style lang="scss" scoped>
 .race-results {
   padding: 40px;
   background: #fafafa;
-  min-height: 100vh;
+  // min-height: 100vh;
 
   .results-card {
     border-radius: 12px;

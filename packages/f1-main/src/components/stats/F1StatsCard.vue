@@ -64,11 +64,16 @@ const getTrendClass = computed(() => props.trend > 0 ? 'trend-up' : 'trend-down'
   .stats-trend {
     display: flex;
     align-items: center;
+    // justify-content: center;
     gap: 4px;
     font-size: 12px;
-
+    padding: 2px;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.05);
     &.trend-up {
       color: var(--f1-color-victory);
+      background-color: rgba(0, 201, 167, .1) !important;
     }
     
     &.trend-down {
@@ -77,7 +82,7 @@ const getTrendClass = computed(() => props.trend > 0 ? 'trend-up' : 'trend-down'
   }
 
   .icon-primary { color: var(--f1-color-primary); }
-  .icon-secondary { color: var(--f1-color-secondary); }
+  .icon-secondary { color: var(--f1-color-safety); }
   .icon-victory { color: var(--f1-color-victory); }
   .icon-pit { color: var(--f1-color-pit); }
 }

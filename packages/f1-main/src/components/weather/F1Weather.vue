@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { Sunny, Wind, Umbrella, Odometer } from '@element-plus/icons-vue'
 import F1Card from '../common/F1Card.vue'
 
 const props = defineProps<{

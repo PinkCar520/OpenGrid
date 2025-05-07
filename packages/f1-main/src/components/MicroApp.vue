@@ -1,33 +1,39 @@
 <template>
-    <div id="micro-race-container"></div>
-    <div id="micro-team-container"></div>
-    <div id="micro-hev-container"></div>
-    <div id="micro-hpv-container"></div>
+    <div v-for="item in microAppStore.microApps" :key="item.name" :id="item.container.slice(1)"
+        v-show="route.path.startsWith(item.prefixPath)">
+    </div>
 </template>
 <script lang="ts" setup>
-import { 
-    onMounted, 
-    onActivated, 
-    onDeactivated, 
+import {
+    onMounted,
+    onActivated,
+    onDeactivated,
     onBeforeUnmount,
     onBeforeMount,
     onUnmounted,
     onUpdated,
-    onBeforeUpdate 
+    onBeforeUpdate
 } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { start } from 'qiankun'
-import { isMicroApp,loadedMicroApps } from '../config/loadedMicroAppLifeCycle'
+import { loadedMicroApps } from '../config/loadedMicroAppLifeCycle'
+import { useMicroAppStore } from '../stores/index'; // 使用 Pinia Store
 
 const router = useRouter()
 const route = useRoute()
+const microAppStore = useMicroAppStore()
 
 onBeforeMount(() => {
-    start()
+    start({
+        urlRerouteOnly: true
+    })
     console.log("micro_beforeMount")
 })
 
 onMounted(() => {
+    if(route.meta?.isMicroApp) {
+        loadedMicroApps(route.path)
+    }
     console.log("micro_mounted")
 })
 
@@ -36,13 +42,13 @@ onBeforeUpdate(() => {
 })
 
 onUpdated(() => {
+    if(route.meta?.isMicroApp) {
+        loadedMicroApps(route.path)
+    }
     console.log("micro_updated")
 })
 
 onActivated(() => {
-    if (isMicroApp(route.path)) {
-        loadedMicroApps(route.path)
-    }
     console.log("micro_activated")
 })
 

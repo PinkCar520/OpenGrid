@@ -84,6 +84,9 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .f1-countdown {
   .countdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     h3 {
       margin: 0;
       color: var(--f1-color-primary);
@@ -108,7 +111,7 @@ onUnmounted(() => {
         font-size: 36px;
         font-weight: bold;
         font-family: var(--f1-font-title);
-        color: var(--f1-color-secondary);
+        color: var(--f1-color-pit);
         min-width: 60px;
       }
       

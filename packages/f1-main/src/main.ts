@@ -6,10 +6,10 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import i18n from './locales/index'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { shared } from './shared'
+import {router} from '@/router'
+// import { shared } from './shared'
 
 import App from './App.vue'
-import router from './router'
 
 const app = createApp(App)
 const pinia = createPinia();
@@ -25,14 +25,10 @@ app.use(router);
 app.use(i18n);
 
 // 挂载共享实例到window对象
-window.$root = shared
+// window.$root = shared
+window.parentRouter = router
 
 app.mount('#app')
-
-
-
-
-
 
 
 

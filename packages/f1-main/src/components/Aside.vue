@@ -130,7 +130,7 @@ const menuData = ref([
     data: {
       id: 'car',
       label: 'route.menu.carMicro.title',
-      icon: MenuIcons.car,
+      // icon: MenuIcons.car,
       title: 'route.menu.carMicro.title',
       value: '/car',
     },
@@ -141,7 +141,7 @@ const menuData = ref([
         data: {
           id: 'car-telemetry',
           label: 'route.menu.carMicro.telemetry',
-          icon: MenuIcons.telemetry,
+          // icon: MenuIcons.telemetry,
           title: 'route.menu.carMicro.telemetry',
           value: '/car/telemetry',
         },
@@ -153,7 +153,7 @@ const menuData = ref([
         data: {
           id: 'car-setup',
           label: 'route.menu.carMicro.setup',
-          icon: MenuIcons.setup,
+          // icon: MenuIcons.setup,
           title: 'route.menu.carMicro.setup',
           value: '/car/setup',
         },
@@ -165,7 +165,7 @@ const menuData = ref([
         data: {
           id: 'car-analysis',
           label: 'route.menu.carMicro.analysis',
-          icon: MenuIcons.analysis,
+          // icon: MenuIcons.analysis,
           title: 'route.menu.carMicro.analysis',
           value: '/car/analysis',
         },
@@ -179,7 +179,7 @@ const menuData = ref([
     data: {
       id: 'driver',
       label: 'route.menu.driverMicro.title',
-      icon: MenuIcons.driver,
+      // icon: MenuIcons.driver,
       title: 'route.menu.driverMicro.title',
       value: '/driver',
     },
@@ -190,7 +190,7 @@ const menuData = ref([
         data: {
           id: 'driver-profile',
           label: 'route.menu.driverMicro.profile',
-          icon: MenuIcons.profile,
+          // icon: MenuIcons.profile,
           title: 'route.menu.driverMicro.profile',
           value: '/driver/profile',
         },
@@ -202,7 +202,7 @@ const menuData = ref([
         data: {
           id: 'driver-performance',
           label: 'route.menu.driverMicro.performance',
-          icon: MenuIcons.performance,
+          // icon: MenuIcons.performance,
           title: 'route.menu.driverMicro.performance',
           value: '/driver/performance',
         },
@@ -214,7 +214,7 @@ const menuData = ref([
         data: {
           id: 'driver-training',
           label: 'route.menu.driverMicro.training',
-          icon: MenuIcons.training,
+          // icon: MenuIcons.training,
           title: 'route.menu.driverMicro.training',
           value: '/driver/training',
         },
@@ -228,7 +228,7 @@ const menuData = ref([
     data: {
       id: 'system',
       label: 'route.menu.system.title',
-      icon: MenuIcons.system,
+      // icon: MenuIcons.system,
       title: 'route.menu.system.title',
       value: '/system',
     },
@@ -239,7 +239,7 @@ const menuData = ref([
         data: {
           id: 'c3lzdGVtLXVzZXJz',
           label: 'route.menu.system.users',
-          icon: MenuIcons.users,
+          // icon: MenuIcons.users,
           title: 'route.menu.system.users',
           value: '/system/users',
         },
@@ -251,7 +251,7 @@ const menuData = ref([
         data: {
           id: 'c3lzdGVtLXJvbGVz',
           label: 'route.menu.system.roles',
-          icon: MenuIcons.roles,
+          // icon: MenuIcons.roles,
           title: 'route.menu.system.roles',
           value: '/system/roles',
         },
@@ -263,7 +263,7 @@ const menuData = ref([
         data: {
           id: 'c3lzdGVtLXBlcm1pc3Npb25z',
           label: 'route.menu.system.permissions',
-          icon: MenuIcons.permissions,
+          // icon: MenuIcons.permissions,
           title: 'route.menu.system.permissions',
           value: '/system/permissions',
         },
@@ -281,32 +281,6 @@ function handleClose(key: string, keyPath: string[]) {
   // console.log('handleClose:', key, keyPath)
 }
 function handleSelect(key: string, keyPath: string[]) {
-  if (tabsStore.currentTab === key) return
-  tabsStore.setCurrentTab(key)
-  // tabsStore.addTabs(route)
-  const existTab = tabsStore.tabs.find((item) => item.path === key)
-  console.log('existTab:', existTab)
-  if(existTab) {
-  } else {
-    // tabsStore.setCurrentTab(key);
-  //   tabsStore.addTabs(route)
-  //   console.log('不存在的tab:', key)
-    }
-  // if (existTab) {
-  //   console.log(existTab,'existTab')
-  //   tabsStore.setCurrentTab(key)
-  // } else {
-  //   console.log('不存在的tab:', key)
-  //   tabsStore.setCurrentTab(key)
-  //   tabsStore.addTabs(route)
-  //   const selectMenu = menuData.value
-  //     .flatMap((item) => item.children)
-  //     .find((item) => item?.data?.value === key)
-  //   if (selectMenu) {
-  //     // tabsStore.tabs.push({ title: selectroute.menu.data.title, path: selectroute.menu.data.value })
-
-  //   }
-  // }
 }
 </script>
 
@@ -323,22 +297,22 @@ function handleSelect(key: string, keyPath: string[]) {
   >
     <template v-for="item in menuData" :index="item.data.value" :key="item.id">
       <el-menu-item v-if="!item.children.length" :index="item.data.value">
-        <el-icon>
+        <!-- <el-icon >
           <component :is="item.data.icon" />
-        </el-icon>
+        </el-icon> -->
         <template #title>{{ t(item.data.label) }}</template>
       </el-menu-item>
       <el-sub-menu v-else :index="item.data.value" :key="item.id">
         <template #title>
-          <el-icon>
+          <!-- <el-icon>
             <component :is="item.data.icon" />
-          </el-icon>
+          </el-icon> -->
           <span>{{ t(item.data.label) }}</span>
         </template>
         <el-menu-item v-for="child in item.children" :index="child.data.value" :key="child.data.id">
-          <el-icon>
-            <component :is="child.data.icon" />
-          </el-icon>
+          <!-- <el-icon> -->
+            <!-- <component :is="child.data.icon" /> -->
+          <!-- </el-icon> -->
           <template #title>{{ t(child.data.label) }}</template>
         </el-menu-item>
       </el-sub-menu>
@@ -348,14 +322,38 @@ function handleSelect(key: string, keyPath: string[]) {
 
 </template>
 <style lang="scss" scoped>
+  .el-menu--collapse {
+    width: 64px;
+    padding: 0px !important;
+
+  }
+  .el-sub-menu__title {
+    padding-left: 0px !important;
+    }
 .el-menu-vertical-vm {
   height: 100vh;
+  padding: 20px;
   transition: width 0.8s ease-in-out;
-  border-right: none;
-  
-  :deep(.el-menu-item) {
+  border-right: 1px solid #ededed;
+  :deep(.el-menu)::before {
+    position: absolute;
+    top: 0px;
+    left: 1.3125rem;
+    width: 2px;
+    height: calc(100% - 4px);
+    content: ' ';
+    background-color: rgba(231, 234, 243, .7);
+  }
+  :deep(.el-menu-item),
+  :deep(.el-sub-menu__title) {
+    margin: 5px 0px;
+    border-radius: 8px;
+    font-weight: bold;
+    padding-left: 30px;
+    &:hover,
     &.is-active {
-      background-color: var(--f1-color-primary-light-9);
+      background-color: #f2f3f6;
+      // background-color: var(--f1-color-primary-light-9);
       color: var(--f1-color-primary);
       
       &::before {
@@ -365,9 +363,26 @@ function handleSelect(key: string, keyPath: string[]) {
         top: 0;
         width: 4px;
         height: 100%;
-        background-color: var(--f1-color-primary);
+        // background-color: var(--f1-color-primary);
       }
     }
+  }
+  &:not(.el-menu--collapse) {
+    .el-menu-item {
+      padding: 0px 20px;
+    }
+  }
+  :deep(.el-menu-item){
+    // margin-left: 30px;
+    &:hover {
+      // margin-left: 30px;
+    }
+  }
+  :deep(.el-menu) {
+    &.is-opened {
+      padding-left: 30px;
+    }
+    // margin: 0px 10px;
   }
 }
 </style>

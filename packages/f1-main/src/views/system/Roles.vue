@@ -1,6 +1,6 @@
 <template>
   <div class="roles-container">
-    <h2>{{ t('route.roles') }}</h2>
+    <h2>{{ t('route.menu.system.roles') }}</h2>
     <!-- 搜索和操作栏 -->
     <div class="header-actions">
       <el-button type="primary" @click="handleAdd">

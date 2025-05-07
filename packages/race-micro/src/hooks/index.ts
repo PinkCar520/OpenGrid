@@ -9,6 +9,7 @@ import { setupI18n } from '../locales';
 
 interface RenderProps {
   container?: HTMLElement;
+  parentHistory?: any
 }
 
 class Render {
@@ -16,16 +17,15 @@ class Render {
   instance: any;
 
   constructor() {
-    this.router = null;
+    this.router = null
   }
 
   render(props: RenderProps = {}) {
     const { container } = props;
     this.router = createRouter({
       history: createWebHashHistory(),
-      routes,
+      routes
     });
-
     this.router.beforeEach((to, from, next) => {
       next();
     });
@@ -42,7 +42,6 @@ class Render {
     this.instance.use(setupI18n(currentLang));
     const pinia = createPinia();
     this.instance.use(pinia);
-
     // 注册所有图标
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
       this.instance.component(key, component)

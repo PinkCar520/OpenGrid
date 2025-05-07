@@ -277,7 +277,7 @@ onMounted(() => {
 .team-development {
   padding: 32px;
   background: #fafafa;
-  min-height: 100vh;
+  // min-height: 100vh;
 
   .stats-section {
     margin-bottom: 32px;

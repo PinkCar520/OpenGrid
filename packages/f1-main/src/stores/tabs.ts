@@ -1,6 +1,8 @@
-import { defineStore } from 'pinia';
-import { events } from '../utils/events';
+import { defineStore } from 'pinia'
+import {router} from '@/router'
+import { events } from '../utils/events'
 import i18n from '../locales'
+import { closeSelectMicroTags } from '@/config/loadedMicroAppLifeCycle'
 
 export const useTabsStore = defineStore('tabs', {
   state: () => ({
@@ -8,28 +10,35 @@ export const useTabsStore = defineStore('tabs', {
     currentTab: '/dashboard',
   }),
   actions: {
-    addTabs(route: Record<string, any>) {
-      const index = this.tabs.findIndex((item) => item.path == route.path);
-      //   标签不存在 就添加
-      if (index == -1) {
-        this.tabs.push(route);
+    addCurrentTab(route: Record<string, any>) {
+      this.currentTab = route.path
+      const existTab = this.tabs.find((item: { path: string }) => item.path === route.path)
+      if (!existTab) {
+        this.tabs.push(route)
       }
-      console.log('tabs', this.tabs);
     },
-    removeTabs(name: string) {
-      delete this.tabs[name];
-    },
-    setCurrentTab(currentTab: string | any) {
-      console.log('currentTab', currentTab);
-      this.currentTab = currentTab;
-      console.log('currentTab', this.currentTab);
+    setCurrentTab(currentTab:string) {
+      this.currentTab = currentTab
     },
     removeCurrentTab(currentTab: string) {
-      delete this.tabs[name];
+      const tabIndex = this.tabs.findIndex((tab) => tab.path === currentTab)
+      if (tabIndex === -1) return
+
+      if (this.currentTab === currentTab) {
+        const nextTab = this.tabs[tabIndex - 1] || this.tabs[tabIndex + 1]
+        this.currentTab = nextTab.path
+        if (nextTab) {
+          router.push(nextTab.path)
+        }
+      }
+      // Remove the tab
+      this.tabs.splice(tabIndex, 1)
+      // this.tabs = this.tabs.filter((tab) => tab.path !== currentTab)
+      closeSelectMicroTags(currentTab)
     },
   },
-  // persist: {
-  //   key: 'tabs',
-  //   storage: localStorage,
-  // },
-});
+  persist: {
+    key: 'tabs',
+    storage: localStorage,
+  },
+})

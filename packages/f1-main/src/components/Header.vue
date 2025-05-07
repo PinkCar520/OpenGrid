@@ -272,7 +272,7 @@ watch(
 
   .aside-toggle {
     width: 64px;
-    padding: 0;
+    // padding: 0;
     display: flex;
     justify-content: center;
   }

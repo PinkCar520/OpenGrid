@@ -1,14 +1,12 @@
-import { createRouter, createWebHistory,createWebHashHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory,createWebHashHistory,isNavigationFailure, type RouteRecordRaw } from 'vue-router'
 import Layout from "../components/Layout.vue";
 import Dashboard from "../views/dashboard/index.vue";
-import { getMicroAppTitle } from "../config/loadedMicroAppLifeCycle";
-import { events } from "../utils/events";
-import { isMicroApp } from "../config/loadedMicroAppLifeCycle";
+import { getMicroAppTitle,loadedMicroApps } from "../config/loadedMicroAppLifeCycle";
 import { useTabsStore } from '../stores/tabs'
 import i18n from '../locales/index'
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "",
+    path: "/",
     name: "root",
     component: Layout,
     redirect: "dashboard",
@@ -165,21 +163,25 @@ const routes: Array<RouteRecordRaw> = [
   //   ]
   // }
 ]
-
-const router = createRouter({
-  history: createWebHashHistory(),
+export const history = createWebHashHistory()
+export const router = createRouter({
+  history,
   routes,
 });
 
-export default router;
 router.beforeEach((to, from, next) => {
   const tabsStore = useTabsStore()
-  tabsStore.addTabs(to)
+  tabsStore.addCurrentTab(to)
   if(to.meta?.isMicroApp) {
     const microAppTitle = getMicroAppTitle(to)
     to.meta.title = microAppTitle
   }
-  console.log('to', to)
-
   next();
 });
+
+router.afterEach((to,from,failure) => {
+  router.listening = false
+  if (isNavigationFailure(failure)) {
+    console.log('failed navigation', failure)
+  }
+})

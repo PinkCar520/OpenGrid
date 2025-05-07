@@ -513,7 +513,7 @@ const getPartStatusType = (partKey: string) => {
 .team-garage {
   padding: 32px;
   background: #fafafa;
-  min-height: 100vh;
+  // min-height: 100vh;
 
   .car-status {
     border-radius: 12px;

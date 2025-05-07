@@ -1,5 +1,7 @@
 <template>
   <div class="f1-dashboard">
+    <el-button @click="goToUser" type='primary'>用户管理</el-button>
+    <el-button @click="goToMicro" type='primary'>赛事管理/micro</el-button>
     <!-- 错误提示 -->
     <el-alert
       v-if="errorStore.visible"
@@ -48,19 +50,20 @@
     <el-row :gutter="20" class="mt-4">
       <!-- 积分榜 -->
       <el-col :span="24">
-        <f1-standings-table
+        <!-- <f1-standings-table
           title="2025赛季积分榜"
           type="primary"
           :drivers="driversStandings"
           :constructors="constructorsStandings"
-        />
+        /> -->
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, markRaw} from 'vue'
+import {useRouter} from "vue-router"
 import { Timer, Trophy, Flag, DataLine, Refresh, Sunny, Cloudy, Lightning } from '@element-plus/icons-vue'
 import F1Countdown from '@/components/race/F1Countdown.vue'
 import F1StandingsTable from '@/components/standings/F1StandingsTable.vue'
@@ -69,15 +72,15 @@ import { useErrorStore } from '@/stores/error'
 
 const f1Store = useF1Store()
 const errorStore = useErrorStore()
-
+const router = useRouter()
 // 自动刷新定时器
 let refreshTimer: number | null = null
 
 // 天气数据
 const weatherData = ref([
-  { date: '2025-05-25', temp: 22, description: '晴朗', icon: Sunny },
-  { date: '2025-05-26', temp: 20, description: '多云', icon: Cloudy },
-  { date: '2025-05-27', temp: 19, description: '雷阵雨', icon: Lightning }
+  { date: '2025-05-25', temp: 22, description: '晴朗', icon: markRaw(Sunny) },
+  { date: '2025-05-26', temp: 20, description: '多云', icon: markRaw(Cloudy) },
+  { date: '2025-05-27', temp: 19, description: '雷阵雨', icon: markRaw(Lightning) }
 ])
 
 // 格式化日期
@@ -127,35 +130,41 @@ onUnmounted(() => {
     f1Store.ws.close()
   }
 })
-
+const goToUser = (() => {
+  router.push('/system/users')
+})
+const goToMicro = (() => {
+  router.push('/race/results')
+})
 // 统计数据
 const statsData = ref([
   {
     title: '已完成比赛',
     value: '5/24',
-    icon: Flag,
+    // icon: Flag,
     type: 'primary',
     trend: 20.8
   },
   {
     title: '领先车手',
     value: 'M. Verstappen',
-    icon: Trophy,
+    // icon: Trophy,
     type: 'victory',
     trend: 15.3
   },
   {
     title: '领先车队',
     value: 'Red Bull Racing',
-    icon: DataLine,
+    // icon: DataLine,
     type: 'pit',
     trend: 12.5
   },
   {
     title: '下一站',
     value: '摩纳哥大奖赛',
-    icon: Timer,
-    type: 'secondary'
+    // icon: Timer,
+    type: 'secondary',
+    trend: 999
   }
 ])
 
@@ -197,8 +206,19 @@ const constructorsStandings = ref([
 <style lang="scss" scoped>
 .f1-dashboard {
   padding: 32px;
-  background-color: #f8f9fa;
-  min-height: 100vh;
+  background-color: #f8f8fb;
+  // min-height: 100vh;
+
+  :deep(.el-card),
+  :deep(.el-alert),
+  :deep(.f1-countdown),
+  :deep(.f1-card--secondary),
+  :deep(.f1-standings),
+  :deep(.f1-standings-table .el-table) {
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
+  }
 
   :deep(.el-card),
   :deep(.el-alert),

@@ -172,7 +172,7 @@ const assignTask = (member: any) => {
 .team-personnel {
   padding: 32px;
   background: #fafafa;
-  min-height: 100vh;
+  // min-height: 100vh;
 
   .card-header {
     display: flex;

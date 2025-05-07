@@ -15,7 +15,6 @@
 <script setup lang="ts">
 import { ref, watch,computed } from 'vue'
 import { useRoute, useRouter, type RouteLocationMatched } from 'vue-router'
-import { isMicroApp } from '../config/loadedMicroAppLifeCycle'
 
 const route = useRoute()
 const router = useRouter()
