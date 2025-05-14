@@ -5,6 +5,8 @@ node_modules
 # Build
 dist
 dist-ssr
+.next
+.turbo
 
 # Testing
 coverage
@@ -13,6 +15,7 @@ coverage
 *.local
 .env
 .env.*
+!.env.example
 
 # Editor
 .vscode/*
@@ -34,7 +37,10 @@ pnpm-debug.log*
 
 # System
 .DS_Store
+Thumbs.db
 
 # Cache
 .eslintcache
 .stylelintcache
+.cache
+.temp
