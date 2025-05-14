@@ -1,8 +1,8 @@
 packages:
   # 所有 packages 目录下的包
   - 'apps/*'
+  - 'apps/web/*'    # 匹配 apps/web/xxx
   - 'packages/*'
-  - 'services/*'
   # 排除测试目录
   - '!**/test/**'
   # 排除构建输出目录
