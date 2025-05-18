@@ -29,7 +29,6 @@ app.use(i18n);
 // 挂载共享实例到window对象
 // window.$root = shared
 (window as any).parentRouter = router;
-console.log(window,'window')
 app.mount('#app')
 
 
