@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TrpcService } from './trpc.service';
+import { MenuRouter } from './routers/menu.router';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,9 +12,11 @@ export class TrpcRouter {
     private readonly trpcService: TrpcService,
     private readonly prisma: PrismaService,
     private readonly authService: AuthService,
+    private readonly menuRouter: MenuRouter,
   ) {}
 
   appRouter = this.trpcService.router({
+    menu: this.menuRouter.router,
     hello: this.trpcService.procedure
       .input(
         z.object({
@@ -102,7 +105,7 @@ export class TrpcRouter {
         const hashedPassword = await this.authService.hashPassword(
           input.password,
         );
-        
+
         const user = await this.prisma.user.create({
           data: {
             email: input.email,
@@ -115,7 +118,6 @@ export class TrpcRouter {
         return { id: user.id };
       }),
   });
-
   // Export type router type signature, not router itself
   type = this.appRouter;
-} 
+}

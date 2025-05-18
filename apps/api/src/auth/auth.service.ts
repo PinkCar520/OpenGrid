@@ -30,7 +30,7 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password);
-    
+
     if (!user) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
@@ -86,4 +86,4 @@ export class AuthService {
       expiresIn: '7d',
     });
   }
-} 
+}

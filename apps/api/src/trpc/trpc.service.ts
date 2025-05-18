@@ -56,4 +56,4 @@ export class TrpcService {
   });
 
   protectedProcedure = this.procedure.use(this.isAuthed);
-} 
+}

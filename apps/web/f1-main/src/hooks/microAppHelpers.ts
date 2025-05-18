@@ -53,7 +53,7 @@ export function getMicroAppTitle(route: RouteLocationNormalized) {
   const appName = route.meta?.microAppName
   try {
     const title = route.path.split("/").pop() || ''
-    const microAppTitle = i18n.global.t(`${route.meta?.title}.${title}`)
+    const microAppTitle = `${route.meta?.title}.${title}`
     return microAppTitle
   } catch (error) {
     console.warn(`Failed to get title for micro-app: ${appName}`, error)

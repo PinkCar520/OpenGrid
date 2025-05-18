@@ -1,29 +1,26 @@
 <template>
     <el-tabs
-    class="tabs"
+      class="tabs"
       v-model="tabsStore.currentTab"
       :closable="tabsStore.tabs.length > 1"
       @tab-click="handleTabClick"
-      @tab-remove="handleTabRemove">
+      @tab-remove="handleTabRemove"
+    >
       <el-tab-pane
         v-for="tab in tabsStore.tabs"
         :key="tab.path"
-        :value="tab.meta.title"
+        :label="getTabTitle(tab.meta.title)"
         :name="tab.path"
       >
-      <template #label>
-        <span>{{tab.meta.title}}</span>
-        <i class="el-icon-close"></i>
-      </template>
       </el-tab-pane>
     </el-tabs>
-
 </template>
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
 import { useTabsStore } from '../stores/tabs'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const router = useRouter();
 const route = useRoute();
 const tabsStore = useTabsStore();
@@ -34,6 +31,17 @@ const handleTabClick = (tab: any) => {
 }
 const handleTabRemove = (currentTab: any):void => {
   tabsStore.removeCurrentTab(currentTab)
+}
+
+// 添加安全的标题获取方法
+const getTabTitle = (title: any) => {
+  // if (!title) return 'Untitled'
+  try {
+    return t(title)
+  } catch (error) {
+    console.warn('Translation key not found:', title)
+    // return title
+  }
 }
 </script>
 
@@ -49,7 +57,7 @@ const handleTabRemove = (currentTab: any):void => {
 }
 :deep(.f1-tabs__header) {
   background-color: var(--f1-border-color-light);
-    padding: 5px;
+    padding: 2px 5px 2px 2px;
     border-radius: 12px;
 }
 :deep(.f1-tabs__item.is-active) {

@@ -1,5 +1,6 @@
 // import './assets/main.css'
 import './styles/index.scss'
+import './styles/globals.scss'  // 替换原有的 style 导入
 import 'nprogress/nprogress.css'
 
 import { createApp } from 'vue'

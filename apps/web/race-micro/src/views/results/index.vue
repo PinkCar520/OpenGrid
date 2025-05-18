@@ -1,6 +1,6 @@
 <template>
   <div class="race-results">
-    <!-- <el-button @click="goJ()" type="primary">查看积分排名</el-button> -->
+    <el-button @click="goJ()" type="primary">查看积分排名</el-button>
     <el-card class="results-card">
       <template #header>
         <div class="header-content">

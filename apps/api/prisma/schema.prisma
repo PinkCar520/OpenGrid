@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -22,6 +21,23 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model MenuItem {
+  id        String     @id @default(uuid())
+  name      String     // 菜单项名称
+  label     String     // 国际化标签
+  path      String     // 路由路径
+  icon      String?    // 图标名称
+  order     Int        @default(0)
+  parentId  String?    // 父菜单ID
+  parent    MenuItem?  @relation("MenuTree", fields: [parentId], references: [id])
+  children  MenuItem[] @relation("MenuTree")
+  visible   Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("menu_items")
 }
 
 enum Role {

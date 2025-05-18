@@ -16,6 +16,7 @@ export class TrpcHandler {
   ) {}
 
   async applyMiddleware(app: INestApplication) {
+    // 添加 tRPC 中间件
     app.use(
       '/trpc',
       trpcExpress.createExpressMiddleware({
@@ -24,4 +25,4 @@ export class TrpcHandler {
       }),
     );
   }
-} 
+}

@@ -39,7 +39,7 @@ import { useLayoutStore } from '../stores/layout'
 
 const isDark = useDark()
 const layoutStore = useLayoutStore()
-const asideWidth = computed(() => (layoutStore.isAsideCollapsed ? '101px' : '241px'))
+const asideWidth = computed(() => (layoutStore.isAsideCollapsed ? '101px' : '281px'))
 
 const handleInternational = () => {
   console.log('国际化')
@@ -64,7 +64,7 @@ const handleInternational = () => {
   }
 
   .common-aside__expand {
-    width: 241px;
+    width: 281px;
   }
 
   .common-aside__collapse {
@@ -76,7 +76,7 @@ const handleInternational = () => {
   }
 
   .common-main__expand {
-    padding-left: 241px;
+    padding-left: 281px;
   }
 
   .common-footer {

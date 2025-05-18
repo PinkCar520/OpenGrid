@@ -5,8 +5,8 @@
         <span
           v-if="index === breadcrumbs.length - 1"
           class="no-redirect"
-        >{{item.meta.title}}</span>
-        <a v-else @click.prevent="handleLink(item)">{{item.meta.title}}</a>
+        >{{ t(item.meta.title)}}</span>
+        <a v-else @click.prevent="handleLink(item)">{{ t(item.meta.title)}}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -15,6 +15,9 @@
 <script setup lang="ts">
 import { ref, watch,computed } from 'vue'
 import { useRoute, useRouter, type RouteLocationMatched } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const route = useRoute()
 const router = useRouter()

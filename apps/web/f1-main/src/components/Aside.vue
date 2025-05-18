@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ref, watch, computed, markRaw } from 'vue'
+import { ref, watch, computed, markRaw,onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { trpc } from '@/api/trpc'
 import { useTabsStore } from '../stores/tabs' // 使用 Pinia Store
-import { isReducedMotion } from '../utils'
+import avatar from "../assets/avatar.png"
 
 import { useLayoutStore } from '../stores/layout'
-import { isDark, toggleDark } from '../composables'
 import {
   Moon,
   Sunny,
@@ -21,421 +21,447 @@ import {
 } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import { MenuIcons } from '@/constants/icons'
+import { useAuthStore } from '@/stores/auth'
 
 const { t } = useI18n()
 const tabsStore = useTabsStore()
 const layoutStore = useLayoutStore()
+const authStore = useAuthStore()
+
 const isCollapse = computed(() => layoutStore.isAsideCollapsed)
 const router = useRouter()
 const route = useRoute()
-const isDarkModel = ref(isDark.value ? 'dark' : 'light')
+const avatarUrl = ref(avatar)
 
-const menuData = ref([
-  {
-    id: 'dashboard',
-    parentId: null,
-    children: [],
-    data: {
-      id: 'dashboard',
-      label: 'route.menu.dashboard',
-      icon: markRaw(MenuIcons.dashboard),
-      title: 'route.menu.dashboard',
-      value: '/dashboard',
-    },
-  },
-  {
-    id: 'race',
-    parentId: null,
-    data: {
-      id: 'race',
-      label: 'route.menu.raceMicro.title',
-      icon: markRaw(MenuIcons.race),
-      title: 'route.menu.raceMicro.title',
-      value: '/race',
-    },
-    children: [
-      {
-        id: 'race-calendar',
-        parentId: 'race',
-        data: {
-          id: 'race-calendar',
-          label: 'route.menu.raceMicro.calendar',
-          icon: markRaw(MenuIcons.calendar),
-          title: 'route.menu.raceMicro.calendar',
-          value: '/race/calendar',
-        },
-        children: [],
-      },
-      {
-        id: 'race-results',
-        parentId: 'race',
-        data: {
-          id: 'race-results',
-          label: 'route.menu.raceMicro.results',
-          icon: markRaw(MenuIcons.results),
-          title: 'route.menu.raceMicro.results',
-          value: '/race/results',
-        },
-        children: [],
-      },
-      {
-        id: 'race-standings',
-        parentId: 'race',
-        data: {
-          id: 'race-standings',
-          label: 'route.menu.raceMicro.standings',
-          icon: markRaw(MenuIcons.standings),
-          title: 'route.menu.raceMicro.standings',
-          value: '/race/standings',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'team',
-    parentId: null,
-    data: {
-      id: 'team',
-      label: 'route.menu.teamMicro.title',
-      icon: markRaw(MenuIcons.team),
-      title: 'route.menu.teamMicro.title',
-      value: '/team',
-    },
-    children: [
-      {
-        id: 'team-garage',
-        parentId: 'team',
-        data: {
-          id: 'team-garage',
-          label: 'route.menu.teamMicro.garage',
-          icon: markRaw(MenuIcons.garage),
-          title: 'route.menu.teamMicro.garage',
-          value: '/team/garage',
-        },
-        children: [],
-      },
-      {
-        id: 'team-development',
-        parentId: 'team',
-        data: {
-          id: 'team-development',
-          label: 'route.menu.teamMicro.development',
-          icon: markRaw(MenuIcons.development),
-          title: 'route.menu.teamMicro.development',
-          value: '/team/development',
-        },
-        children: [],
-      },
-      {
-        id: 'team-personnel',
-        parentId: 'team',
-        data: {
-          id: 'team-personnel',
-          label: 'route.menu.teamMicro.personnel',
-          icon: markRaw(MenuIcons.personnel),
-          title: 'route.menu.teamMicro.personnel',
-          value: '/team/personnel',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'car',
-    parentId: null,
-    data: {
-      id: 'car',
-      label: 'route.menu.carMicro.title',
-      icon: markRaw(MenuIcons.car),
-      title: 'route.menu.carMicro.title',
-      value: '/car',
-    },
-    children: [
-      {
-        id: 'car-telemetry',
-        parentId: 'car',
-        data: {
-          id: 'car-telemetry',
-          label: 'route.menu.carMicro.telemetry',
-          icon: markRaw(MenuIcons.telemetry),
-          title: 'route.menu.carMicro.telemetry',
-          value: '/car/telemetry',
-        },
-        children: [],
-      },
-      {
-        id: 'car-setup',
-        parentId: 'car',
-        data: {
-          id: 'car-setup',
-          label: 'route.menu.carMicro.setup',
-          icon: markRaw(MenuIcons.setup),
-          title: 'route.menu.carMicro.setup',
-          value: '/car/setup',
-        },
-        children: [],
-      },
-      {
-        id: 'car-analysis',
-        parentId: 'car',
-        data: {
-          id: 'car-analysis',
-          label: 'route.menu.carMicro.analysis',
-          icon: markRaw(MenuIcons.analysis),
-          title: 'route.menu.carMicro.analysis',
-          value: '/car/analysis',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'driver',
-    parentId: null,
-    data: {
-      id: 'driver',
-      label: 'route.menu.driverMicro.title',
-      icon: markRaw(MenuIcons.driver),
-      title: 'route.menu.driverMicro.title',
-      value: '/driver',
-    },
-    children: [
-      {
-        id: 'driver-profile',
-        parentId: 'driver',
-        data: {
-          id: 'driver-profile',
-          label: 'route.menu.driverMicro.profile',
-          icon: markRaw(MenuIcons.profile),
-          title: 'route.menu.driverMicro.profile',
-          value: '/driver/profile',
-        },
-        children: [],
-      },
-      {
-        id: 'driver-performance',
-        parentId: 'driver',
-        data: {
-          id: 'driver-performance',
-          label: 'route.menu.driverMicro.performance',
-          icon: markRaw(MenuIcons.performance),
-          title: 'route.menu.driverMicro.performance',
-          value: '/driver/performance',
-        },
-        children: [],
-      },
-      {
-        id: 'driver-training',
-        parentId: 'driver',
-        data: {
-          id: 'driver-training',
-          label: 'route.menu.driverMicro.training',
-          icon: markRaw(MenuIcons.training),
-          title: 'route.menu.driverMicro.training',
-          value: '/driver/training',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'operations',
-    parentId: null,
-    data: {
-      id: 'operations',
-      label: 'route.menu.operationsMicro.title',
-      icon: markRaw(MenuIcons.operations),
-      title: 'route.menu.operationsMicro.title',
-      value: '/operations',
-    },
-    children: [
-      {
-        id: 'operations-planning',
-        parentId: 'operations',
-        data: {
-          id: 'operations-planning',
-          label: 'route.menu.operationsMicro.planning',
-          icon: markRaw(MenuIcons.planning),
-          title: 'route.menu.operationsMicro.planning',
-          value: '/operations/planning',
-        },
-        children: [],
-      },
-      {
-        id: 'operations-broadcast',
-        parentId: 'operations',
-        data: {
-          id: 'operations-broadcast',
-          label: 'route.menu.operationsMicro.broadcast',
-          icon: markRaw(MenuIcons.broadcast),
-          title: 'route.menu.operationsMicro.broadcast',
-          value: '/operations/broadcast',
-        },
-        children: [],
-      },
-      {
-        id: 'operations-logistics',
-        parentId: 'operations',
-        data: {
-          id: 'operations-logistics',
-          label: 'route.menu.operationsMicro.logistics',
-          icon: markRaw(MenuIcons.logistics),
-          title: 'route.menu.operationsMicro.logistics',
-          value: '/operations/logistics',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'track',
-    parentId: null,
-    data: {
-      id: 'track',
-      label: 'route.menu.trackMicro.title',
-      icon: markRaw(MenuIcons.track),
-      title: 'route.menu.trackMicro.title',
-      value: '/track',
-    },
-    children: [
-      {
-        id: 'track-conditions',
-        parentId: 'track',
-        data: {
-          id: 'track-conditions',
-          label: 'route.menu.trackMicro.conditions',
-          icon: markRaw(MenuIcons.conditions),
-          title: 'route.menu.trackMicro.conditions',
-          value: '/track/conditions',
-        },
-        children: [],
-      },
-      {
-        id: 'track-safety',
-        parentId: 'track',
-        data: {
-          id: 'track-safety',
-          label: 'route.menu.trackMicro.safety',
-          icon: markRaw(MenuIcons.safety),
-          title: 'route.menu.trackMicro.safety',
-          value: '/track/safety',
-        },
-        children: [],
-      },
-      {
-        id: 'track-strategy',
-        parentId: 'track',
-        data: {
-          id: 'track-strategy',
-          label: 'route.menu.trackMicro.strategy',
-          icon: markRaw(MenuIcons.strategy),
-          title: 'route.menu.trackMicro.strategy',
-          value: '/track/strategy',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'analytics',
-    parentId: null,
-    data: {
-      id: 'analytics',
-      label: 'route.menu.analyticsMicro.title',
-      icon: markRaw(MenuIcons.analytics),
-      title: 'route.menu.analyticsMicro.title',
-      value: '/analytics',
-    },
-    children: [
-      {
-        id: 'analytics-charts',
-        parentId: 'analytics',
-        data: {
-          id: 'analytics-charts',
-          label: 'route.menu.analyticsMicro.charts',
-          icon: markRaw(MenuIcons.charts),
-          title: 'route.menu.analyticsMicro.charts',
-          value: '/analytics/charts',
-        },
-        children: [],
-      },
-      {
-        id: 'analytics-prediction',
-        parentId: 'analytics',
-        data: {
-          id: 'analytics-prediction',
-          label: 'route.menu.analyticsMicro.prediction',
-          icon: markRaw(MenuIcons.prediction),
-          title: 'route.menu.analyticsMicro.prediction',
-          value: '/analytics/prediction',
-        },
-        children: [],
-      },
-      {
-        id: 'analytics-reports',
-        parentId: 'analytics',
-        data: {
-          id: 'analytics-reports',
-          label: 'route.menu.analyticsMicro.reports',
-          icon: markRaw(MenuIcons.reports),
-          title: 'route.menu.analyticsMicro.reports',
-          value: '/analytics/reports',
-        },
-        children: [],
-      },
-    ],
-  },
-  {
-    id: 'system',
-    parentId: null,
-    data: {
-      id: 'system',
-      label: 'route.menu.system.title',
-      icon: markRaw(MenuIcons.system),
-      title: 'route.menu.system.title',
-      value: '/system',
-    },
-    children: [
-      {
-        id: 'c3lzdGVtLXVzZXJz', // base64 for 'system-users'
-        parentId: 'c3lzdGVt',
-        data: {
-          id: 'c3lzdGVtLXVzZXJz',
-          label: 'route.menu.system.users',
-          icon: markRaw(MenuIcons.users),
-          title: 'route.menu.system.users',
-          value: '/system/users',
-        },
-        children: [],
-      },
-      {
-        id: 'c3lzdGVtLXJvbGVz', // base64 for 'system-roles'
-        parentId: 'c3lzdGVt',
-        data: {
-          id: 'c3lzdGVtLXJvbGVz',
-          label: 'route.menu.system.roles',
-          icon: markRaw(MenuIcons.roles),
-          title: 'route.menu.system.roles',
-          value: '/system/roles',
-        },
-        children: [],
-      },
-      {
-        id: 'c3lzdGVtLXBlcm1pc3Npb25z', // base64 for 'system-permissions'
-        parentId: 'c3lzdGVt',
-        data: {
-          id: 'c3lzdGVtLXBlcm1pc3Npb25z',
-          label: 'route.menu.system.permissions',
-          icon: markRaw(MenuIcons.permissions),
-          title: 'route.menu.system.permissions',
-          value: '/system/permissions',
-        },
-        children: [],
-      },
-    ],
+const menuData = ref([]);
+
+const fetchMenuData = async () => {
+  try {
+    const data = await trpc.menu.getMenuTree.query()
+    // 处理菜单图标
+    const processedData = data.map(item => ({
+      ...item,
+      data: {
+        ...item.data,
+        icon: markRaw(MenuIcons[item.data.icon]) // 假设后端返回的是图标名称
+      }
+    }))
+    menuData.value = processedData
+  } catch (error) {
+    console.error('Failed to fetch menu data:', error)
+    // 可以使用默认菜单数据作为fallback
   }
-])
+}
+onMounted(() => {
+  fetchMenuData()
+})
+
+// const menuData1 = ref([
+//   {
+//     id: 'dashboard',
+//     parentId: null,
+//     children: [],
+//     data: {
+//       id: 'dashboard',
+//       label: 'route.menu.dashboard',
+//       icon: markRaw(MenuIcons.dashboard),
+//       title: 'route.menu.dashboard',
+//       value: '/dashboard',
+//     },
+//   },
+//   {
+//     id: 'race',
+//     parentId: null,
+//     data: {
+//       id: 'race',
+//       label: 'route.menu.raceMicro.title',
+//       icon: markRaw(MenuIcons.race),
+//       title: 'route.menu.raceMicro.title',
+//       value: '/race',
+//     },
+//     children: [
+//       {
+//         id: 'race-calendar',
+//         parentId: 'race',
+//         data: {
+//           id: 'race-calendar',
+//           label: 'route.menu.raceMicro.calendar',
+//           icon: markRaw(MenuIcons.calendar),
+//           title: 'route.menu.raceMicro.calendar',
+//           value: '/race/calendar',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'race-results',
+//         parentId: 'race',
+//         data: {
+//           id: 'race-results',
+//           label: 'route.menu.raceMicro.results',
+//           icon: markRaw(MenuIcons.results),
+//           title: 'route.menu.raceMicro.results',
+//           value: '/race/results',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'race-standings',
+//         parentId: 'race',
+//         data: {
+//           id: 'race-standings',
+//           label: 'route.menu.raceMicro.standings',
+//           icon: markRaw(MenuIcons.standings),
+//           title: 'route.menu.raceMicro.standings',
+//           value: '/race/standings',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'team',
+//     parentId: null,
+//     data: {
+//       id: 'team',
+//       label: 'route.menu.teamMicro.title',
+//       icon: markRaw(MenuIcons.team),
+//       title: 'route.menu.teamMicro.title',
+//       value: '/team',
+//     },
+//     children: [
+//       {
+//         id: 'team-garage',
+//         parentId: 'team',
+//         data: {
+//           id: 'team-garage',
+//           label: 'route.menu.teamMicro.garage',
+//           icon: markRaw(MenuIcons.garage),
+//           title: 'route.menu.teamMicro.garage',
+//           value: '/team/garage',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'team-development',
+//         parentId: 'team',
+//         data: {
+//           id: 'team-development',
+//           label: 'route.menu.teamMicro.development',
+//           icon: markRaw(MenuIcons.development),
+//           title: 'route.menu.teamMicro.development',
+//           value: '/team/development',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'team-personnel',
+//         parentId: 'team',
+//         data: {
+//           id: 'team-personnel',
+//           label: 'route.menu.teamMicro.personnel',
+//           icon: markRaw(MenuIcons.personnel),
+//           title: 'route.menu.teamMicro.personnel',
+//           value: '/team/personnel',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'car',
+//     parentId: null,
+//     data: {
+//       id: 'car',
+//       label: 'route.menu.carMicro.title',
+//       icon: markRaw(MenuIcons.car),
+//       title: 'route.menu.carMicro.title',
+//       value: '/car',
+//     },
+//     children: [
+//       {
+//         id: 'car-telemetry',
+//         parentId: 'car',
+//         data: {
+//           id: 'car-telemetry',
+//           label: 'route.menu.carMicro.telemetry',
+//           icon: markRaw(MenuIcons.telemetry),
+//           title: 'route.menu.carMicro.telemetry',
+//           value: '/car/telemetry',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'car-setup',
+//         parentId: 'car',
+//         data: {
+//           id: 'car-setup',
+//           label: 'route.menu.carMicro.setup',
+//           icon: markRaw(MenuIcons.setup),
+//           title: 'route.menu.carMicro.setup',
+//           value: '/car/setup',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'car-analysis',
+//         parentId: 'car',
+//         data: {
+//           id: 'car-analysis',
+//           label: 'route.menu.carMicro.analysis',
+//           icon: markRaw(MenuIcons.analysis),
+//           title: 'route.menu.carMicro.analysis',
+//           value: '/car/analysis',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'driver',
+//     parentId: null,
+//     data: {
+//       id: 'driver',
+//       label: 'route.menu.driverMicro.title',
+//       icon: markRaw(MenuIcons.driver),
+//       title: 'route.menu.driverMicro.title',
+//       value: '/driver',
+//     },
+//     children: [
+//       {
+//         id: 'driver-profile',
+//         parentId: 'driver',
+//         data: {
+//           id: 'driver-profile',
+//           label: 'route.menu.driverMicro.profile',
+//           icon: markRaw(MenuIcons.profile),
+//           title: 'route.menu.driverMicro.profile',
+//           value: '/driver/profile',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'driver-performance',
+//         parentId: 'driver',
+//         data: {
+//           id: 'driver-performance',
+//           label: 'route.menu.driverMicro.performance',
+//           icon: markRaw(MenuIcons.performance),
+//           title: 'route.menu.driverMicro.performance',
+//           value: '/driver/performance',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'driver-training',
+//         parentId: 'driver',
+//         data: {
+//           id: 'driver-training',
+//           label: 'route.menu.driverMicro.training',
+//           icon: markRaw(MenuIcons.training),
+//           title: 'route.menu.driverMicro.training',
+//           value: '/driver/training',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'operations',
+//     parentId: null,
+//     data: {
+//       id: 'operations',
+//       label: 'route.menu.operationsMicro.title',
+//       icon: markRaw(MenuIcons.operations),
+//       title: 'route.menu.operationsMicro.title',
+//       value: '/operations',
+//     },
+//     children: [
+//       {
+//         id: 'operations-planning',
+//         parentId: 'operations',
+//         data: {
+//           id: 'operations-planning',
+//           label: 'route.menu.operationsMicro.planning',
+//           icon: markRaw(MenuIcons.planning),
+//           title: 'route.menu.operationsMicro.planning',
+//           value: '/operations/planning',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'operations-broadcast',
+//         parentId: 'operations',
+//         data: {
+//           id: 'operations-broadcast',
+//           label: 'route.menu.operationsMicro.broadcast',
+//           icon: markRaw(MenuIcons.broadcast),
+//           title: 'route.menu.operationsMicro.broadcast',
+//           value: '/operations/broadcast',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'operations-logistics',
+//         parentId: 'operations',
+//         data: {
+//           id: 'operations-logistics',
+//           label: 'route.menu.operationsMicro.logistics',
+//           icon: markRaw(MenuIcons.logistics),
+//           title: 'route.menu.operationsMicro.logistics',
+//           value: '/operations/logistics',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'track',
+//     parentId: null,
+//     data: {
+//       id: 'track',
+//       label: 'route.menu.trackMicro.title',
+//       icon: markRaw(MenuIcons.track),
+//       title: 'route.menu.trackMicro.title',
+//       value: '/track',
+//     },
+//     children: [
+//       {
+//         id: 'track-conditions',
+//         parentId: 'track',
+//         data: {
+//           id: 'track-conditions',
+//           label: 'route.menu.trackMicro.conditions',
+//           icon: markRaw(MenuIcons.conditions),
+//           title: 'route.menu.trackMicro.conditions',
+//           value: '/track/conditions',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'track-safety',
+//         parentId: 'track',
+//         data: {
+//           id: 'track-safety',
+//           label: 'route.menu.trackMicro.safety',
+//           icon: markRaw(MenuIcons.safety),
+//           title: 'route.menu.trackMicro.safety',
+//           value: '/track/safety',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'track-strategy',
+//         parentId: 'track',
+//         data: {
+//           id: 'track-strategy',
+//           label: 'route.menu.trackMicro.strategy',
+//           icon: markRaw(MenuIcons.strategy),
+//           title: 'route.menu.trackMicro.strategy',
+//           value: '/track/strategy',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'analytics',
+//     parentId: null,
+//     data: {
+//       id: 'analytics',
+//       label: 'route.menu.analyticsMicro.title',
+//       icon: markRaw(MenuIcons.analytics),
+//       title: 'route.menu.analyticsMicro.title',
+//       value: '/analytics',
+//     },
+//     children: [
+//       {
+//         id: 'analytics-charts',
+//         parentId: 'analytics',
+//         data: {
+//           id: 'analytics-charts',
+//           label: 'route.menu.analyticsMicro.charts',
+//           icon: markRaw(MenuIcons.charts),
+//           title: 'route.menu.analyticsMicro.charts',
+//           value: '/analytics/charts',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'analytics-prediction',
+//         parentId: 'analytics',
+//         data: {
+//           id: 'analytics-prediction',
+//           label: 'route.menu.analyticsMicro.prediction',
+//           icon: markRaw(MenuIcons.prediction),
+//           title: 'route.menu.analyticsMicro.prediction',
+//           value: '/analytics/prediction',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'analytics-reports',
+//         parentId: 'analytics',
+//         data: {
+//           id: 'analytics-reports',
+//           label: 'route.menu.analyticsMicro.reports',
+//           icon: markRaw(MenuIcons.reports),
+//           title: 'route.menu.analyticsMicro.reports',
+//           value: '/analytics/reports',
+//         },
+//         children: [],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'system',
+//     parentId: null,
+//     data: {
+//       id: 'system',
+//       label: 'route.menu.system.title',
+//       icon: markRaw(MenuIcons.system),
+//       title: 'route.menu.system.title',
+//       value: '/system',
+//     },
+//     children: [
+//       {
+//         id: 'c3lzdGVtLXVzZXJz', // base64 for 'system-users'
+//         parentId: 'c3lzdGVt',
+//         data: {
+//           id: 'c3lzdGVtLXVzZXJz',
+//           label: 'route.menu.system.users',
+//           icon: markRaw(MenuIcons.users),
+//           title: 'route.menu.system.users',
+//           value: '/system/users',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'c3lzdGVtLXJvbGVz', // base64 for 'system-roles'
+//         parentId: 'c3lzdGVt',
+//         data: {
+//           id: 'c3lzdGVtLXJvbGVz',
+//           label: 'route.menu.system.roles',
+//           icon: markRaw(MenuIcons.roles),
+//           title: 'route.menu.system.roles',
+//           value: '/system/roles',
+//         },
+//         children: [],
+//       },
+//       {
+//         id: 'c3lzdGVtLXBlcm1pc3Npb25z', // base64 for 'system-permissions'
+//         parentId: 'c3lzdGVt',
+//         data: {
+//           id: 'c3lzdGVtLXBlcm1pc3Npb25z',
+//           label: 'route.menu.system.permissions',
+//           icon: markRaw(MenuIcons.permissions),
+//           title: 'route.menu.system.permissions',
+//           value: '/system/permissions',
+//         },
+//         children: [],
+//       },
+//     ],
+//   }
+// ])
 
 const microApps = ref([])
 function handleOpen(key: string, keyPath: string[]) {
@@ -446,54 +472,16 @@ function handleClose(key: string, keyPath: string[]) {
 }
 function handleSelect(key: string, keyPath: string[]) {
 }
-const handleFullScreen = () => {
-  const fullscreenElement = document.fullscreenElement
-  if (!fullscreenElement) {
-    document.documentElement.requestFullscreen()
-  } else {
-    document.exitFullscreen()
-  }
+
+const toggleAside = () => {
+  layoutStore.toggleAside()
+  // 触发事件通知父组件
+  // emit('toggle-aside', isCollapse.value)
 }
-const toggleTheme = async (event: MouseEvent) => {
-  const x = event.clientX
-  const y = event.clientY
-  const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
-
-  if (!document.startViewTransition || isReducedMotion()) {
-    toggleDark()
-    return
-  }
-
-  const transition = document.startViewTransition(() => {
-    toggleDark()
-  })
-
-  transition.ready.then(() => {
-    const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
-    document.documentElement.animate(
-      {
-        clipPath: isDark.value ? [...clipPath].reverse() : clipPath,
-      },
-      {
-        duration: 500,
-        easing: 'ease-in-out',
-        pseudoElement: isDark.value ? '::view-transition-old(root)' : '::view-transition-new(root)',
-      },
-    )
-  })
+// 处理退出登录
+const handleLogout = () => {
+  authStore.logout()
 }
-// Watch system theme changes
-watch(
-  () => window.matchMedia('(prefers-color-scheme: dark)').matches,
-  (isDarkMode) => {
-    isDark.value = isDarkMode
-  },
-)
-
-// // 同步主题状态
-// watch(isDark, (newValue) => {
-//   isDarkModel.value = newValue ? "dark" : "light"
-// })
 </script>
 
 <template>
@@ -524,17 +512,53 @@ watch(
       </template>
     </el-menu>
     <el-space :size="20" class="aside-action__buttons">
-      <el-space :size="8">
-        <el-switch class="theme-switch" v-model="isDarkModel" size="large" :active-action-icon="Moon"
-          :inactive-action-icon="Sunny" style="--f1-switch-on-color: #2c2c2c" @click="toggleTheme" />
-      </el-space>
-      <el-button type="info" link @click="handleFullScreen">
-        <el-icon size="22px">
-          <FullScreen />
+              <div class="user-dropdown">
+          <el-dropdown trigger="click">
+            <div class="user-info">
+              <el-avatar 
+                shape="circle" :size="40"
+                :src="avatarUrl"
+              />
+              <div class="user-text">
+                <span class="name">{{ authStore.user?.name }}</span>
+                <span class="email">{{authStore.user?.email}}</span>
+              </div>
+              <el-icon class="arrow-icon"><ArrowDown /></el-icon>
+            </div>
+            <template #dropdown>
+              <el-dropdown-menu class="custom-dropdown">
+                <div class="dropdown-header"></div>
+                <div class="dropdown-menu">
+                  <el-dropdown-item class="menu-item">
+                    <el-icon><User /></el-icon>
+                    <span>Edit profile</span>
+                  </el-dropdown-item>
+                  <el-dropdown-item class="menu-item">
+                    <el-icon><Setting /></el-icon>
+                    <span>Account settings</span>
+                  </el-dropdown-item>
+                  <el-dropdown-item class="menu-item">
+                    <el-icon><Bell /></el-icon>
+                    <span>Support</span>
+                  </el-dropdown-item>
+                  <el-dropdown-item divided class="menu-item sign-out" @click="handleLogout">
+                    <el-icon><SwitchButton /></el-icon>
+                    <span>Sign out</span>
+                  </el-dropdown-item>
+                </div>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+    </el-space>
+
+            <el-button type="default" link @click="toggleAside" class="toggle-aside">
+        <el-icon size="20px">
+          <component :is="isCollapse ? ArrowRight : ArrowLeft" />
         </el-icon>
       </el-button>
-    </el-space>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -613,5 +637,125 @@ watch(
 .f1-menu-item.is-active {
 
   // background-color: var(--f1-menu-bg-primary-color);
+}
+
+.user-dropdown {
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--el-fill-color-light);
+      // border-color: var(--el-border-color);
+
+      .arrow-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    .user-text {
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--el-text-color-primary);
+        line-height: 1.4;
+      }
+
+      .email {
+        font-size: 12px;
+        color: var(--el-text-color-secondary);
+        line-height: 1.4;
+      }
+    }
+
+    .arrow-icon {
+      margin-left: auto;
+      color: var(--el-text-color-secondary);
+      transition: transform 0.2s ease;
+    }
+  }
+}
+
+.custom-dropdown {
+  min-width: 280px !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+
+  .dropdown-header {
+    // padding: 20px;
+    background-color: var(--el-fill-color-light);
+    // border-bottom: 1px solid var(--el-border-color-lighter);
+
+    .user-info {
+      margin-top: 16px;
+      text-align: center;
+
+      .name {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--el-text-color-primary);
+        margin-bottom: 4px;
+      }
+
+      .email {
+        font-size: 14px;
+        color: var(--el-text-color-secondary);
+      }
+    }
+  }
+
+  .dropdown-menu {
+    padding: 8px;
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 44px;
+      padding: 0 12px;
+      margin: 4px 0;
+      border-radius: 8px;
+      color: var(--el-text-color-primary);
+
+      .el-icon {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      &:hover {
+        background-color: var(--el-fill-color-light);
+      }
+
+      &.sign-out {
+        color: var(--el-color-danger);
+        margin-top: 8px;
+        // border-top: 1px solid var(--el-border-color-lighter);
+
+        .el-icon {
+          color: var(--el-color-danger);
+        }
+      }
+    }
+  }
+}
+.toggle-aside {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: var(--el-box-shadow);
 }
 </style>

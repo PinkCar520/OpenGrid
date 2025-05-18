@@ -159,7 +159,7 @@ export default {
     }
   },
   header: {
-    title: 'ZeroSphere New Energy Vehicle · Intelligent Platform',
+    title: 'OPEN GRID · Intelligent Platform',
     notifications: 'Notifications',
     profile: 'Profile',
     changePassword: 'Change Password',
@@ -270,5 +270,58 @@ export default {
     pageNotFound: "Page not found",
     pageNotFoundDesc: "Sorry, the page you visited does not exist or has been removed.",
     backHome: "Back to Home",
+  },
+  login: {
+    title: 'Sign In',
+    description: 'Enter your email and password to sign in',
+    email: 'Email',
+    emailPlaceholder: 'Enter your email',
+    password: 'Password',
+    passwordPlaceholder: 'Enter your password',
+    submit: 'Sign In',
+    submitting: 'Signing in...',
+    noAccount: "Don't have an account?",
+    register: 'Register now',
+    validation: {
+      emailRequired: 'Email is required',
+      emailFormat: 'Please enter a valid email address',
+      passwordRequired: 'Password is required',
+      passwordLength: 'Password must be at least 6 characters'
+    }
+  },
+  register: {
+    title: 'Create Account',
+    description: 'Create your account',
+    email: 'Email',
+    emailPlaceholder: 'Enter your email',
+    username: 'Username',
+    usernamePlaceholder: 'Enter your username',
+    password: 'Password',
+    passwordPlaceholder: 'Enter your password',
+    confirmPassword: 'Confirm Password',
+    confirmPasswordPlaceholder: 'Confirm your password',
+    submit: 'Register',
+    submitting: 'Registering...',
+    haveAccount: 'Already have an account?',
+    login: 'Sign in',
+    validation: {
+      emailRequired: 'Email is required',
+      emailFormat: 'Please enter a valid email',
+      usernameRequired: 'Username is required',
+      usernameLength: 'Username must be at least 2 characters',
+      passwordRequired: 'Password is required',
+      passwordLength: 'Password must be at least 6 characters',
+      confirmPasswordRequired: 'Please confirm your password',
+      passwordMismatch: 'Passwords do not match'
+    }
+  },
+  auth: {
+    notifications: {
+      loginSuccess: 'Login successful',
+      loginFailed: 'Login failed',
+      registerSuccess: 'Registration successful',
+      registerFailed: 'Registration failed',
+      logoutSuccess: 'Logged out successfully'
+    }
   }
 }

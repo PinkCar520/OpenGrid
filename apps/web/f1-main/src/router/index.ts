@@ -1,225 +1,184 @@
-import { createRouter, createWebHistory,createWebHashHistory,isNavigationFailure, type RouteRecordRaw } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+  isNavigationFailure,
+  type RouteRecordRaw,
+} from 'vue-router'
 import NProgress from 'nprogress'
-import Layout from "../components/Layout.vue";
-import Dashboard from "../views/dashboard/index.vue";
-import { getMicroAppTitle } from "../hooks/microAppHelpers";
+import Layout from '../components/Layout.vue'
+import Dashboard from '../views/dashboard/index.vue'
+import QueryTable from '../views/example/QueryTable.vue'
+import { getMicroAppTitle } from '../hooks/microAppHelpers'
 import { useTabsStore } from '../stores/tabs'
 import i18n from '../locales/index'
+import { useAuthStore } from '@/stores/auth'
+
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "root",
+    path: '/',
+    name: 'root',
     component: Layout,
-    redirect: "dashboard",
+    redirect: 'dashboard',
     meta: {
       keepAlive: true,
     },
     children: [
       {
-        path: "/dashboard",
-        name: "dashboard",
+        path: '/dashboard',
+        name: 'dashboard',
         component: Dashboard,
         meta: {
-          title: i18n.global.t("route.menu.dashboard"),
+          title: 'route.menu.dashboard',
           keepAlive: true,
+          requiresAuth: true,
         },
       },
       {
-        path: "system",
-        name: "system",
+        path: '/queryTable',
+        name: 'queryTable',
+        component: QueryTable,
         meta: {
-          title: i18n.global.t("route.menu.system.title"),
+          title: 'route.menu.dashboard',
           keepAlive: true,
+          requiresAuth: true,
+        },
+      },
+      {
+        path: 'system',
+        name: 'system',
+        meta: {
+          title: 'route.menu.system.title',
+          keepAlive: true,
+          requiresAuth: true,
         },
         children: [
           {
-            path: "users",
-            name: "users",
-            component: () => import("../views/system/Users.vue"),
+            path: 'users',
+            name: 'users',
+            component: () => import('../views/system/Users.vue'),
             meta: {
-              title: i18n.global.t("route.menu.system.users"),
+              title: 'route.menu.system.users',
               keepAlive: true,
+              requiresAuth: true,
             },
           },
           {
-            path: "roles",
-            name: "roles",
-            component: () => import("../views/system/Roles.vue"),
+            path: 'roles',
+            name: 'roles',
+            component: () => import('../views/system/Roles.vue'),
             meta: {
-              title: i18n.global.t("route.menu.system.roles"),
+              title: 'route.menu.system.roles',
               keepAlive: true,
+              requiresAuth: true,
             },
           },
           {
-            path: "permissions",
-            name: "permissions",
-            component: () => import("../views/system/Permissions.vue"),
+            path: 'permissions',
+            name: 'permissions',
+            component: () => import('../views/system/Permissions.vue'),
             meta: {
-              title: i18n.global.t("route.menu.system.permissions"),
+              title: 'route.menu.system.permissions',
               keepAlive: true,
+              requiresAuth: true,
             },
           },
-        ]
-      }
-    ]
-  },
-  {
-    path: "/race/:pathMatch(.*)*",
-    name: "raceMicro",
-    component: Layout,
-    children: [
+        ],
+      },
+      {
+        path: '/404',
+        name: '404',
+        component: () => import('../views/error/404.vue'),
+        meta: {
+          title: '404',
+          hidden: true,
+          requiresAuth: true,
+        },
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404',
+        meta: {
+          hidden: true,
+          requiresAuth: true,
+        },
+      },
     ],
-    meta: {
-      title: "route.menu.raceMicro",
-      keepAlive: true,
-      isMicroApp: true,
-      microAppName: 'raceMicro'
-    },
   },
   {
-    path: "/team/:pathMatch(.*)*",
-    name: "teamMicro",
+    path: '/race/:pathMatch(.*)*',
+    name: 'raceMicro',
     component: Layout,
     children: [],
     meta: {
-      title: "route.menu.teamMicro",
+      title: 'route.menu.raceMicro',
       keepAlive: true,
       isMicroApp: true,
-      microAppName: 'teamMicro'
+      requiresAuth: true,
+      microAppName: 'raceMicro',
     },
   },
-  // {
-  //   path: '/team',
-  //   name: 'Team',
-  //   component: () => import('@/views/team/index.vue'),
-  //   children: [
-  //     // {
-  //     //   path: 'garage',
-  //     //   name: 'Garage',
-  //     //   component: () => import('@/views/team/garage/index.vue'),
-  //     //   meta: { title: '维修车间' }
-  //     // },
-  //     {
-  //       path: 'development',
-  //       name: 'Development',
-  //       component: () => import('@/views/team/development/index.vue'),
-  //       meta: { title: '研发中心' }
-  //     },
-  //     // {
-  //     //   path: 'personnel',
-  //     //   name: 'Personnel',
-  //     //   component: () => import('@/views/team/personnel/index.vue'),
-  //     //   meta: { title: '人员管理' }
-  //     // }
-  //   ]
-  // },
-  // {
-  //   path: '/car',
-  //   name: 'Car',
-  //   component: () => import('@/views/car/index.vue'),
-  //   children: [
-  //     {
-  //       path: 'telemetry',
-  //       name: 'Telemetry',
-  //       component: () => import('@/views/car/telemetry/index.vue'),
-  //       meta: { title: '遥测数据' }
-  //     },
-  //     // {
-  //     //   path: 'setup',
-  //     //   name: 'Setup',
-  //     //   component: () => import('@/views/car/setup/index.vue'),
-  //     //   meta: { title: '赛车设置' }
-  //     // },
-  //     // {
-  //     //   path: 'analysis',
-  //     //   name: 'Analysis',
-  //     //   component: () => import('@/views/car/analysis/index.vue'),
-  //     //   meta: { title: '性能分析' }
-  //     // }
-  //   ]
-  // },
-  // {
-  //   path: '/driver',
-  //   name: 'Driver',
-  //   component: () => import('@/views/driver/index.vue'),
-  //   children: [
-  //     // {
-  //     //   path: 'profile',
-  //     //   name: 'Profile',
-  //     //   component: () => import('@/views/driver/profile/index.vue'),
-  //     //   meta: { title: '车手档案' }
-  //     // },
-  //     // {
-  //     //   path: 'performance',
-  //     //   name: 'Performance',
-  //     //   component: () => import('@/views/driver/performance/index.vue'),
-  //     //   meta: { title: '表现分析' }
-  //     // },
-  //     // {
-  //     //   path: 'training',
-  //     //   name: 'Training',
-  //     //   component: () => import('@/views/driver/training/index.vue'),
-  //     //   meta: { title: '训练数据' }
-  //     // }
-  //   ]
-  // },
   {
-    path: '/404',
-    name: '404',
-    component: () => import('../views/error/404.vue'),
+    path: '/team/:pathMatch(.*)*',
+    name: 'teamMicro',
+    component: Layout,
+    children: [],
     meta: {
-      title: '404',
-      hidden: true
-    }
+      title: 'route.menu.teamMicro',
+      keepAlive: true,
+      isMicroApp: true,
+      requiresAuth: true,
+      microAppName: 'teamMicro',
+    },
   },
   {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-    meta: {
-      hidden: true
-    }
-  }
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue'),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/RegisterView.vue'),
+    meta: { requiresAuth: false },
+  },
 ]
+
 export const history = createWebHashHistory()
 export const router = createRouter({
   history,
   routes,
-});
+})
 
 router.beforeEach((to, from, next) => {
   const tabsStore = useTabsStore()
+  const authStore = useAuthStore()
   tabsStore.addCurrentTab(to)
-  if(to.meta?.isMicroApp) {
+  if (to.meta?.isMicroApp) {
     const microAppTitle = getMicroAppTitle(to)
     to.meta.title = microAppTitle
   }
 
-  // 添加NProgress加载进度条
-  NProgress.start()
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  if (requiresAuth && !authStore.isAuthenticated) {
+    next('/login')
+  } else if (!requiresAuth && authStore.isAuthenticated) {
+    next('/dashboard')
+  } else {
+    if (to.path !== '/login' && to.path !== '/register') {
+      NProgress.start()
+    }
+    next()
+  }
+})
 
-  // 权限检查逻辑 (可以根据需要添加)
-  // const hasToken = localStorage.getItem('token')
-  // if (hasToken) {
-  //   if (to.path === '/login') {
-  //     next({ path: '/' })
-  //   } else {
-  //     next()
-  //   }
-  // } else {
-  //   if (whiteList.indexOf(to.path) !== -1) {
-  //     next()
-  //   } else {
-  //     next(`/login?redirect=${to.path}`)
-  //   }
-  // }
-
-  next();
-});
-
-router.afterEach((to,from,failure) => {
+router.afterEach((to, from, failure) => {
   NProgress.done()
   router.listening = false
-  if(to.path === from.path) { return }
+  if (to.path === from.path) {
+    return
+  }
   if (isNavigationFailure(failure)) {
     console.log('failed navigation', failure)
   }
