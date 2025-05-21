@@ -250,7 +250,7 @@ const constructorsStandings = ref([
   height: 100%;
   overflow-y: auto;
   padding: 24px;
-  background: var(--el-bg-color-page);
+  // background: var(--el-bg-color-page);
 
   :deep(.f1-card),
   :deep(.f1-alert),

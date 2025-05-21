@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import commonRoutes from "./modules/common"
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
     name: 'root',
-    redirect: '/hev/hevhome',
+    redirect: '/car/telemetry',
     children: [
       {
         path: 'home',
@@ -15,16 +15,16 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/hev',
-    name: 'hev',
+    path: '/car',
+    name: 'car',
     children: [
       ...commonRoutes,
     ],
     meta: {
-      title: 'hev',
+      title: 'car',
       keepAlive: true
     }
   },
 ];
 
-export default routes;
+export default routes

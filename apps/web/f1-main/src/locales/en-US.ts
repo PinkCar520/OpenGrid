@@ -323,5 +323,38 @@ export default {
       registerFailed: 'Registration failed',
       logoutSuccess: 'Logged out successfully'
     }
+  },
+  settings: {
+    title: 'Settings',
+    description: 'Manage your organization settings and preferences.',
+    organization: {
+      title: 'Organization',
+      description: 'This information will be displayed publicly so be careful what you share.',
+      name: 'Organization Name',
+      nameHelp: 'This will be displayed on your public profile.',
+      about: 'About',
+      aboutHelp: 'Brief description for your organization. URLs are hyperlinked.'
+    },
+    contact: {
+      title: 'Contact Information',
+      description: 'This information will be used to contact you.',
+      email: 'Email Address',
+      address: 'Address',
+      streetAddress: 'Street address',
+      city: 'City',
+      province: 'Province',
+      postalCode: 'Postal code',
+      country: 'Country',
+      showEmail: 'Show email on public profile'
+    },
+    currency: {
+      title: 'Currency Settings',
+      description: 'Choose your default currency.',
+      select: 'Select Currency'
+    },
+    actions: {
+      save: 'Save',
+      cancel: 'Cancel'
+    }
   }
 }

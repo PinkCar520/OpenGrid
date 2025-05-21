@@ -86,6 +86,15 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: '/settings',
+        name: 'settings',
+        component: () => import('@/views/settings/AccountView.vue'),
+        meta: {
+          title: 'settings.title',
+          requiresAuth: true,
+        },
+      },
+      {
         path: '/404',
         name: '404',
         component: () => import('../views/error/404.vue'),
@@ -129,6 +138,19 @@ const routes: Array<RouteRecordRaw> = [
       isMicroApp: true,
       requiresAuth: true,
       microAppName: 'teamMicro',
+    },
+  },
+  {
+    path: '/car/:pathMatch(.*)*',
+    name: 'carMicro',
+    component: Layout,
+    children: [],
+    meta: {
+      title: 'route.menu.carMicro',
+      keepAlive: true,
+      isMicroApp: true,
+      requiresAuth: true,
+      microAppName: 'carMicro',
     },
   },
   {

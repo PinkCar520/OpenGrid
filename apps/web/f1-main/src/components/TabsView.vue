@@ -20,6 +20,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import { useTabsStore } from '../stores/tabs'
 import { useI18n } from 'vue-i18n'
+import { CloseBold } from '@element-plus/icons-vue';
 const { t } = useI18n()
 const router = useRouter();
 const route = useRoute();
@@ -47,8 +48,8 @@ const getTabTitle = (title: any) => {
 
 <style lang="scss" scoped>
 :deep(.f1-tabs__item) {
-  margin-right: 5px;
-  border-radius: 12px;
+  margin: 2px 0 !important;
+  border-radius: 8px;
   // color: var(--f1-text-color-primary);
   padding: 0px 20px !important;
 }
@@ -57,8 +58,8 @@ const getTabTitle = (title: any) => {
 }
 :deep(.f1-tabs__header) {
   background-color: var(--f1-border-color-light);
-    padding: 2px 5px 2px 2px;
-    border-radius: 12px;
+    padding: 0 2px;
+    border-radius: 8px;
 }
 :deep(.f1-tabs__item.is-active) {
   background-color: #fff !important;

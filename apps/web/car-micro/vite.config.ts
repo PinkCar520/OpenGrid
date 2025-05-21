@@ -14,7 +14,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   plugins: [
     vue(),
-    qiankun('hevMicro', {
+    qiankun('carMicro', {  // 修改为carMicro
       useDevMode: true,
     }),
     AutoImport({
@@ -46,7 +46,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5130,
+    port: 5130,  // 修改端口
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

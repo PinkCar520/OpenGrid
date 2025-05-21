@@ -6,7 +6,11 @@
       </el-icon>
       <div class="stats-info">
         <h4 class="stats-title">{{ title }}</h4>
-        <div class="stats-value">{{ value }}</div>
+        <div class="stats-value">
+          <el-tooltip :content="value" placement="top">
+            <span>{{ value }}</span>
+          </el-tooltip>
+        </div>
         <div v-if="trend" class="stats-trend" :class="getTrendClass">
           <el-icon><component :is="getTrendIcon" /></el-icon>
           <span>{{ Math.abs(trend) }}%</span>
@@ -64,6 +68,10 @@ const getTrendClass = computed(() => props.trend > 0 ? 'trend-up' : 'trend-down'
     font-weight: bold;
     margin: 8px 0;
     color: var(--el-text-color-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
   }
 
   .stats-trend {

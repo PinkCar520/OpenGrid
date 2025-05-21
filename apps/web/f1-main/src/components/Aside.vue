@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, computed, markRaw,onMounted } from 'vue'
+import { ref, watch, computed, markRaw, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { trpc } from '@/api/trpc'
 import { useTabsStore } from '../stores/tabs' // 使用 Pinia Store
@@ -10,14 +10,15 @@ import {
   Moon,
   Sunny,
   FullScreen,
-  Bell,
-  ArrowDown,
+  Warning,
+  ArrowDownBold,
   User,
   Key,
   SwitchButton,
-  ArrowLeft,
-  ArrowRight,
+  ArrowLeftBold,
+  ArrowRightBold,
   Shop,
+  ArrowUpBold,
 } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import { MenuIcons } from '@/constants/icons'
@@ -478,6 +479,9 @@ const toggleAside = () => {
   // 触发事件通知父组件
   // emit('toggle-aside', isCollapse.value)
 }
+const handleSettings = () => {
+  router.push('/settings')
+}
 // 处理退出登录
 const handleLogout = () => {
   authStore.logout()
@@ -486,8 +490,8 @@ const handleLogout = () => {
 
 <template>
   <div class="aside-container">
-    <el-menu :collapse="isCollapse" router :default-active="tabsStore.currentTab"
-      class="aside-menu-wrapper" @open="handleOpen" @close="handleClose" @select="handleSelect">
+    <el-menu :collapse="isCollapse" router :default-active="tabsStore.currentTab" class="aside-menu-wrapper"
+      @open="handleOpen" @close="handleClose" @select="handleSelect">
       <template v-for="item in menuData" :index="item.data.value" :key="item.id">
         <el-menu-item v-if="!item.children.length" :index="item.data.value">
           <el-icon>
@@ -495,7 +499,9 @@ const handleLogout = () => {
           </el-icon>
           <template #title>{{ t(item.data.label) }}</template>
         </el-menu-item>
-        <el-sub-menu v-else :index="item.data.value" :key="item.id">
+        <el-sub-menu :expand-close-icon="ArrowDownBold" :collapse-close-icon="ArrowRightBold"
+          :collapse-open-icon="ArrowLeftBold" :expand-open-icon="ArrowUpBold" v-else :index="item.data.value"
+          :key="item.id">
           <template #title>
             <el-icon>
               <component :is="item.data.icon" />
@@ -512,51 +518,52 @@ const handleLogout = () => {
       </template>
     </el-menu>
     <el-space :size="20" class="aside-action__buttons">
-              <div class="user-dropdown">
-          <el-dropdown trigger="click">
-            <div class="user-info">
-              <el-avatar 
-                shape="circle" :size="40"
-                :src="avatarUrl"
-              />
-              <div class="user-text">
-                <span class="name">{{ authStore.user?.name }}</span>
-                <span class="email">{{authStore.user?.email}}</span>
-              </div>
-              <el-icon class="arrow-icon"><ArrowDown /></el-icon>
+      <div class="user-dropdown">
+        <el-dropdown trigger="click">
+          <div class="user-info">
+            <el-avatar shape="circle" :size="40" :src="avatarUrl" />
+            <div class="user-text">
+              <span class="name">{{ authStore.user?.name }}</span>
+              <span class="email">{{ authStore.user?.email }}</span>
             </div>
-            <template #dropdown>
-              <el-dropdown-menu class="custom-dropdown">
-                <div class="dropdown-header"></div>
-                <div class="dropdown-menu">
-                  <el-dropdown-item class="menu-item">
-                    <el-icon><User /></el-icon>
-                    <span>Edit profile</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item class="menu-item">
-                    <el-icon><Setting /></el-icon>
-                    <span>Account settings</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item class="menu-item">
-                    <el-icon><Bell /></el-icon>
-                    <span>Support</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item divided class="menu-item sign-out" @click="handleLogout">
-                    <el-icon><SwitchButton /></el-icon>
-                    <span>Sign out</span>
-                  </el-dropdown-item>
-                </div>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
+            <el-icon class="arrow-icon">
+              <ArrowDownBold />
+            </el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu class="custom-dropdown">
+              <div class="dropdown-header"></div>
+              <div class="dropdown-menu">
+                <el-dropdown-item class="menu-item" @click="handleSettings">
+                  <el-icon>
+                    <User />
+                  </el-icon>
+                  <span>My account</span>
+                </el-dropdown-item>
+                <el-dropdown-item class="menu-item">
+                  <el-icon>
+                    <Warning />
+                  </el-icon>
+                  <span>Support Info</span>
+                </el-dropdown-item>
+                <el-dropdown-item divided class="menu-item sign-out" @click="handleLogout">
+                  <el-icon>
+                    <SwitchButton />
+                  </el-icon>
+                  <span>Sign out</span>
+                </el-dropdown-item>
+              </div>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </el-space>
 
-            <el-button type="default" link @click="toggleAside" class="toggle-aside">
-        <el-icon size="20px">
-          <component :is="isCollapse ? ArrowRight : ArrowLeft" />
-        </el-icon>
-      </el-button>
+    <el-button type="default" link @click="toggleAside" class="toggle-aside">
+      <el-icon>
+        <component :is="isCollapse ? ArrowRightBold : ArrowLeftBold" />
+      </el-icon>
+    </el-button>
   </div>
 
 </template>
@@ -749,6 +756,7 @@ const handleLogout = () => {
     }
   }
 }
+
 .toggle-aside {
   position: absolute;
   bottom: 150px;

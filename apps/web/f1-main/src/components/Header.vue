@@ -200,16 +200,17 @@ watch(
           <div class="action-buttons">
             <el-space :size="8">
               <el-switch class="theme-switch" v-model="isDarkModel" size="large" :active-action-icon="Moon"
-                :inactive-action-icon="Sunny" style="--f1-switch-on-color: #2c2c2c" @click="toggleTheme" />
+                :inactive-action-icon="Sunny" style="--f1-switch-on-color: #2c2c2c;" @click="toggleTheme" />
             </el-space>
             <el-space :size="8">
-              <el-icon size="22px" @click="handleFullScreen">
-                <FullScreen />
+              <el-button link type="info">
+              <el-icon size="20px" @click="handleFullScreen">
+                <FullScreen color="#606266"/>
               </el-icon>
+              </el-button>
             </el-space>
             <el-dropdown trigger="hover" class="lang-dropdown">
               <el-space :size="8">
-                <!-- <el-icon><Shop /></el-icon> -->
                 <span class="current-lang">
                   <span class="flag">{{languages.find((l) => l.value === currentLang)?.flag}}</span>
                   {{languages.find((l) => l.value === currentLang)?.label}}
@@ -231,7 +232,7 @@ watch(
               <el-button class="notification-btn" :class="{ 'is-active': showNotifications }"
                 @click="handleNotification">
                 <el-badge :value="notificationCount" :hidden="!notificationCount">
-                  <el-icon size="22px">
+                  <el-icon size="20px">
                     <Bell />
                   </el-icon>
                 </el-badge>
@@ -369,7 +370,6 @@ watch(
         transition: width 0.8s ease-in-out;
         margin-right: 8px;
       }
-
       .action-buttons {
         display: flex;
         gap: 16px;

@@ -329,5 +329,37 @@ export default {
       registerFailed: '注册失败',
       logoutSuccess: '已退出登录'
     }
+  },
+  settings: {
+    title: '设置',
+    organization: {
+      title: '组织信息',
+      description: '这些信息将公开显示，请谨慎分享。',
+      name: '组织名称',
+      nameHelp: '这将显示在您的公开资料中。',
+      about: '关于',
+      aboutHelp: '简要描述您的组织。网址将自动转为链接。'
+    },
+    contact: {
+      title: '联系方式',
+      description: '这些信息用于联系您。',
+      email: '邮箱地址',
+      address: '地址',
+      streetAddress: '街道地址',
+      city: '城市',
+      province: '省份',
+      postalCode: '邮政编码',
+      country: '国家',
+      showEmail: '在公开资料中显示邮箱'
+    },
+    currency: {
+      title: '货币设置',
+      description: '选择您的默认货币。',
+      select: '选择货币'
+    },
+    actions: {
+      save: '保存',
+      cancel: '取消'
+    }
   }
 }
